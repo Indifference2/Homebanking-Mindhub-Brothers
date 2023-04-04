@@ -1,0 +1,43 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+header{
+    height: 20vh;
+    background-color: #2C3639;
+}
+h1, h2, h3 {
+    font-family: 'Poppins';
+}
+
+nav a{
+    text-decoration: none;
+    color: white;
+}
+
+.icon-nav-link{
+    border-radius: 10%;
+    color: white;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    gap: 0.5rem;
+}
+
+svg{
+    color: white;
+}
+
+.card-account{
+    position: relative;
+    border-radius: 10%;
+    border: 2px solid #DDFFBB;
+    background-color: #3F4E4F;
+}
+
+button >svg{
+    height: 2rem;
+    width: 5rem;
+}
