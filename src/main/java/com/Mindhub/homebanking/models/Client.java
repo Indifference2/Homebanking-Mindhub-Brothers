@@ -15,20 +15,19 @@ public class Client {
     private String firstName;
     private String lastName;
     private String email;
-
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     Set<Account> accounts = new HashSet<>();
-    public Set<Account> getAccounts(){return accounts;}
-    public void addAccount(Account account){
-        account.setClient(this);
-        accounts.add(account);
-    }
     public Client(){}
     public Client(String first, String last, String mail){
         this.firstName = first;
         this.lastName = last;
         this.email = mail;
     }
+    public void addAccount(Account account){
+        account.setClient(this);
+        accounts.add(account);
+    }
+    public Set<Account> getAccounts(){return accounts;}
     public long getId() {
         return id;
     }
