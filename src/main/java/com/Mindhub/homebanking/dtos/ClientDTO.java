@@ -1,14 +1,8 @@
 package com.Mindhub.homebanking.dtos;
 
-import com.Mindhub.homebanking.models.Account;
 import com.Mindhub.homebanking.models.Client;
-
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-
-
 public class ClientDTO {
     private Long id;
     private String firstName;
@@ -27,19 +21,15 @@ public class ClientDTO {
     public Long getId() {
         return id;
     }
-
     public Set<AccountDTO> getAccount() {
         return account;
     }
-
     public String getFirstName() {
         return firstName;
     }
-
     public String getLastName() {
         return lastName;
     }
-
     public String getEmail() {
         return email;
     }
