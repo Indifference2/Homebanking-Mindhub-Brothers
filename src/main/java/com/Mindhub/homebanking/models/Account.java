@@ -1,5 +1,7 @@
 package com.Mindhub.homebanking.models;
 
+import com.Mindhub.homebanking.dtos.AccountDTO;
+import com.jayway.jsonpath.JsonPath;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
