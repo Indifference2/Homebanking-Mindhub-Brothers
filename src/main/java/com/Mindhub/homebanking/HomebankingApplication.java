@@ -2,9 +2,11 @@ package com.Mindhub.homebanking;
 
 import com.Mindhub.homebanking.models.Account;
 import com.Mindhub.homebanking.models.Client;
+import com.Mindhub.homebanking.models.Loan;
 import com.Mindhub.homebanking.models.Transaction;
 import com.Mindhub.homebanking.repositories.ClientRepository;
 import com.Mindhub.homebanking.repositories.AccountRepository;
+import com.Mindhub.homebanking.repositories.LoanRepository;
 import com.Mindhub.homebanking.repositories.TransactionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static com.Mindhub.homebanking.models.TransactionType.CREDIT;
 import static com.Mindhub.homebanking.models.TransactionType.DEBIT;
@@ -24,7 +27,7 @@ public class HomebankingApplication {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner initData(ClientRepository repository, AccountRepository accountRepository, TransactionRepository transactionRepository) {
+	public CommandLineRunner initData(ClientRepository repository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository) {
 		return (args) -> {
 			// save a couple of customers
 			Client cliente1 = new Client("Melba", "Morel", "melba@mindhub.com");
@@ -59,6 +62,13 @@ public class HomebankingApplication {
 
 			accountRepository.save(account1);
 			accountRepository.save(account2);
+
+			Loan loan1 = new Loan("Hipotecario", 500000.00, List.of(12, 24, 36, 48, 60));
+			Loan loan2 = new Loan("Personal", 100000.00, List.of(6, 12, 24));
+			Loan loan3 = new Loan("Automotriz", 300000.00, List.of(6, 12, 24, 36));
+			loanRepository.save(loan1);
+			loanRepository.save(loan2);
+			loanRepository.save(loan3);
 
 		};
 	}
