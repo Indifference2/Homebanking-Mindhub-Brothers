@@ -26,18 +26,11 @@ public class ClientLoan {
     }
 
     public long getId() {return id;}
-
     public void setId(long id) {this.id = id;}
-
     public double getAmount() {return amount;}
-
     public void setAmount(double amount) {this.amount = amount;}
-
     public Client getClient() {return client;}
-
     public void setClient(Client client) {this.client = client;}
-
     public Loan getLoan() {return loan;}
-
     public void setLoan(Loan loan) {this.loan = loan;}
 }
