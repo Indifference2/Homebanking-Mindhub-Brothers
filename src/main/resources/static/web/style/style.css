@@ -1,22 +1,37 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-header{
-    height: 20vh;
-    background-color: #2C3639;
+
+html{
+    overflow-x:hidden;
 }
-h1, h2, h3 {
+
+body{
+    overflow-x: hidden;
+}
+header {
+    height: 25vh;
+    background: rgb(105, 152, 39);
+    background: linear-gradient(174deg, rgba(105, 152, 39, 1) 0%, rgba(35, 148, 177, 1) 100%, rgba(0, 0, 0, 1) 100%);
+    border-bottom-left-radius: 50% 20%;
+    border-bottom-right-radius: 50% 20%;
+}
+
+h1,
+h2,
+h3,
+p {
     font-family: 'Poppins';
 }
 
-nav a{
+nav a {
     text-decoration: none;
     color: white;
 }
 
-.icon-nav-link{
+.icon-nav-link {
     border-radius: 10%;
     color: white;
     border: 2px solid white;
@@ -26,18 +41,41 @@ nav a{
     gap: 0.5rem;
 }
 
-svg{
+svg {
     color: white;
 }
 
-.card-account{
+.logo{
+    position: absolute;
+    top: 20px;
+    width: 5rem;
+    height: 5rem;
+}
+
+main{
+    min-height: 60vh;
+}
+
+.green-credit{
+    background: rgb(165, 204, 165);
+}
+
+.red-debit{
+    background: rgb(206, 124, 124);
+}
+
+.card-account {
     position: relative;
     border-radius: 10%;
     border: 2px solid #DDFFBB;
     background-color: #3F4E4F;
 }
 
-button >svg{
+button>svg {
     height: 2rem;
     width: 5rem;
+}
+
+footer{
+    height: 15vh;
 }

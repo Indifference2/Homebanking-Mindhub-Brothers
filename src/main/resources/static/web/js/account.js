@@ -1,23 +1,41 @@
-const {createApp} = Vue; 
+const {createApp} = Vue 
 
 createApp({
     data(){
         return{
-        dataAccount : [],
-        data : [],
+            transactions : [],
+            totalBalance : 0,
+            accountId : "",
+            data : [],
+            transactionsOrder: [],
         }
     },
     created(){
-        this.loadData();
+        const params = new URLSearchParams(location.search)
+        this.accountId = params.get('id')
+        this.loadData()
     },
     methods:{
         loadData(){
-            axios.get("http://localhost:8080/api/clients/1")
-            .then((response)=> {
-                this.dataAccount = response.data.account
-                this.data = response.data
+            axios.get("http://localhost:8080/api/accounts/" + this.accountId)
+            .then(response => {
+                this.totalBalance = response.data.balance
+                this.transactions = response.data.transaction
+                this.transactionsOrder = this.transactions.sort((a,b) => b.id - a.id)
+                this.debitBalance()
             })
             .catch(error => console.log(error))
-            },
-    },
+        },
+        isDebit(transaction){
+            return transaction === 'DEBIT'
+        },
+        debitBalance(){
+            for(currentTransaction of this.transactions){
+                if(this.isDebit(currentTransaction.type)){
+                    this.totalBalance -= currentTransaction.amount
+                }
+            }
+            return this.totalBalance
+        },
+    }
 }).mount("#app")

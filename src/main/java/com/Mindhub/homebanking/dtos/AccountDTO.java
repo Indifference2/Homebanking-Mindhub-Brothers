@@ -7,11 +7,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class AccountDTO {
+    private long id;
     private String number;
     private LocalDateTime creationMode;
     private double balance;
     private Set<TransactionDTO> transaction;
     public AccountDTO(Account account){
+        this.id = account.getId();
         this.number = account.getNumber();
         this.creationMode = account.getCreationDate();
         this.balance = account.getBalance();
@@ -19,6 +21,8 @@ public class AccountDTO {
                 .stream().map(transaction -> new TransactionDTO(transaction))
                 .collect(Collectors.toSet());
     }
+
+    public long getId() {return id;}
     public String getNumber() {return number;}
     public void setNumber(String number) {this.number = number;}
     public LocalDateTime getCreationMode() {return creationMode;}
