@@ -28,7 +28,6 @@ public class Transaction {
     public Account getAccount() {return account;}
     public void setAccount(Account account) {this.account = account;}
     public long getId() {return id;}
-    public void setId(long id) {this.id = id;}
     public TransactionType getType() {return type;}
     public void setType(TransactionType type) {
         this.type = type;
