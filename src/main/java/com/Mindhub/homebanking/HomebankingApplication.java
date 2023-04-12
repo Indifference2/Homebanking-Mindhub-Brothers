@@ -1,9 +1,6 @@
 package com.Mindhub.homebanking;
 
-import com.Mindhub.homebanking.models.Account;
-import com.Mindhub.homebanking.models.Client;
-import com.Mindhub.homebanking.models.Loan;
-import com.Mindhub.homebanking.models.Transaction;
+import com.Mindhub.homebanking.models.*;
 import com.Mindhub.homebanking.repositories.ClientRepository;
 import com.Mindhub.homebanking.repositories.AccountRepository;
 import com.Mindhub.homebanking.repositories.LoanRepository;
@@ -38,11 +35,12 @@ public class HomebankingApplication {
 			cliente1.addAccount(account1);
 			cliente1.addAccount(account2);
 
-			Transaction transaction1 = new Transaction(CREDIT, 3250.50, "Ebay", LocalDateTime.now());
-			Transaction transaction2 = new Transaction(DEBIT, 50.5, "Amazon", LocalDateTime.now().plusDays(2));
-			Transaction transaction3 = new Transaction(DEBIT, 550.5, "Amazon", LocalDateTime.now().plusDays(2));
-			Transaction transaction4 = new Transaction(CREDIT, 3000.10, "Google", LocalDateTime.now().plusDays(2));
-			Transaction transaction5 = new Transaction(DEBIT, 660.20, "Alibaba", LocalDateTime.now().plusDays(3));
+			Transaction transaction1 = new Transaction(TransactionType.CREDIT, 3250.50, "Ebay", LocalDateTime.now());
+			Transaction transaction2 = new Transaction(TransactionType.DEBIT, 50.5, "Amazon", LocalDateTime.now().plusDays(2));
+			Transaction transaction3 = new Transaction(TransactionType.DEBIT, 550.5, "Amazon", LocalDateTime.now().plusDays(2));
+			Transaction transaction4 = new Transaction(TransactionType.CREDIT, 3000.10, "Google", LocalDateTime.now().plusDays(2));
+			Transaction transaction5 = new Transaction(TransactionType.DEBIT, 660.20, "Alibaba", LocalDateTime.now().plusDays(3));
+
 			accountRepository.save(account1);
 			accountRepository.save(account2);
 
