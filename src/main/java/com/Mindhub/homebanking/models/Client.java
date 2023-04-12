@@ -45,6 +45,8 @@ public class Client {
     }
     public Set<Account> getAccounts(){return accounts;}
     public void setAccounts(Set<Account> accounts) {this.accounts = accounts;}
+    public Set<ClientLoan> getClientLoans() {return clientLoans;}
+    public void setClientLoans(Set<ClientLoan> clientLoans) {this.clientLoans = clientLoans;}
     public long getId() {
         return id;
     }
