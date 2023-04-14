@@ -5,6 +5,7 @@ createApp({
         return{
         dataAccount : [],
         data : [],
+        dataClientLoans: [],
         }
     },
     created(){
@@ -16,6 +17,7 @@ createApp({
             .then((response)=> {
                 this.dataAccount = response.data.account
                 this.data = response.data
+                this.dataClientLoans = response.data.clientLoans
             })
             .catch(error => console.log(error))
             },
