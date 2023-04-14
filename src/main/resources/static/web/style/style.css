@@ -64,11 +64,15 @@ main{
     background: rgb(206, 124, 124);
 }
 
-.card-account {
-    position: relative;
+.cardAccount {
     border-radius: 10%;
     border: 2px solid #DDFFBB;
-    background-color: #3F4E4F;
+    background: rgb(105, 152, 39);
+}
+
+#table-loans{
+    width: 20rem;
+    background: linear-gradient(174deg, rgba(105, 152, 39, 1) 0%, rgba(35, 148, 177, 1) 100%, rgba(0, 0, 0, 1) 100%);
 }
 
 button>svg {
