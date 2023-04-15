@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -25,7 +26,8 @@ public class HomebankingApplication {
 									  AccountRepository accountRepository,
 									  TransactionRepository transactionRepository,
 									  LoanRepository loanRepository,
-									  ClientLoanRepository clientLoanRepository) {
+									  ClientLoanRepository clientLoanRepository,
+									  CardRepository cardRepository) {
 		return (args) -> {
 			// save a couple of customers
 			Client cliente1 = new Client("Melba", "Morel", "melba@mindhub.com");
@@ -84,6 +86,12 @@ public class HomebankingApplication {
 
 			clientRepository.save(cliente1);
 
+			Card card1 = new Card("Melba Morel", CardType.DEBIT, CardColor.GOLD,
+					"1234-5678-9012-3456" ,123, LocalDate.now(), LocalDate.now().plusYears(5));
+			cliente1.addCard(card1);
+			cardRepository.save(card1);
+
+			clientRepository.save(cliente1);
 		};
 	}
 }
