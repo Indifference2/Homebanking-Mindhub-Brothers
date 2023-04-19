@@ -4,25 +4,30 @@
     box-sizing: border-box;
 }
 
-html{
-    overflow-x:hidden;
-}
-
-body{
+html {
     overflow-x: hidden;
 }
+
+
+
+body {
+    overflow-x: hidden;
+    background-image: url(../img/pattern-bg.png);
+    background-size: cover;
+}
+
 header {
-    height: 25vh;
-    background: rgb(105, 152, 39);
-    background: linear-gradient(174deg, rgba(105, 152, 39, 1) 0%, rgba(35, 148, 177, 1) 100%, rgba(0, 0, 0, 1) 100%);
-    border-bottom-left-radius: 50% 20%;
-    border-bottom-right-radius: 50% 20%;
+    height: 10vh;
+    background: rgb(135, 134, 129);
+    background: linear-gradient(353deg, rgba(135, 134, 129, 1) 29%, rgba(255, 255, 255, 1) 100%);
+    /* border-bottom-left-radius: 50% 20%;
+    border-bottom-right-radius: 50% 20%; */
+
 }
 
 h1,
 h2,
-h3,
-p {
+h3 {
     font-family: 'Poppins';
 }
 
@@ -45,22 +50,23 @@ svg {
     color: white;
 }
 
-.logo{
-    position: absolute;
-    top: 20px;
-    width: 5rem;
+.logo {
+    width: 8rem;
     height: 5rem;
+    padding: 5px;
+    object-fit: cover;
 }
 
-main{
-    min-height: 60vh;
+main {
+    min-height: 80vh;
+    background-image: url(../img/pattern-bg.png);
 }
 
-.green-credit{
+.green-credit {
     background: rgb(165, 204, 165);
 }
 
-.red-debit{
+.red-debit {
     background: rgb(206, 124, 124);
 }
 
@@ -70,9 +76,9 @@ main{
     background: rgb(105, 152, 39);
 }
 
-#table-loans{
+#table-loans {
     width: 20rem;
-    background: linear-gradient(174deg, rgba(105, 152, 39, 1) 0%, rgba(35, 148, 177, 1) 100%, rgba(0, 0, 0, 1) 100%);
+    background: linear-gradient(174deg, rgba(139, 195, 74, 1) 0%, rgba(35, 148, 177, 1) 100%, rgba(0, 0, 0, 1) 100%);
 }
 
 button>svg {
@@ -80,6 +86,111 @@ button>svg {
     width: 5rem;
 }
 
-footer{
-    height: 15vh;
+footer {
+    height: 10vh;
+    background: rgb(135, 134, 129);
+    background: linear-gradient(353deg, rgba(255, 255, 255, 1) 29%, rgba(135, 134, 129, 1) 100%);
+}
+
+/* PAGE CARDs */
+@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@800&display=swap');
+
+.title-debit-card {
+    font-family: 'Aboreto', cursive;
+    background-color: #8c8c8c;
+    /* background: linear-gradient(353deg, rgba(135, 134, 129, 1) 29%, rgba(255, 255, 255, 1) 100%); */
+}
+
+#slider-card {
+    border: 2px solid black;
+    height: auto;
+    width: 25rem;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
+    -webkit-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
+    -moz-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
+}
+
+#slider-card h3 {
+    font-family: monospace;
+}
+
+.slider-bg-silver {
+    background: rgb(192, 192, 192);
+    background: linear-gradient(330deg, rgba(192, 192, 192, 1) 34%, #d6aa5c 92%);
+}
+
+.slider-bg-gold {
+    background: rgb(255, 215, 0);
+    background: linear-gradient(330deg, rgba(255, 215, 0, 1) 34%, #eaeae9 92%);
+}
+
+.slider-bg-titanum {
+    background: rgb(129, 134, 135);
+    background: linear-gradient(330deg, rgba(129, 134, 135, 1) 34%, #eaeae9 92%);
+}
+
+.visa-chip {
+    width: 3rem;
+    object-fit: contain;
+}
+
+.visa-logo {
+    width: 5rem;
+    object-fit: contain;
+}
+
+.details {
+    width: 25rem;
+    height: auto;
+    border-radius: 1rem;
+    border: 2px solid gray;
+    background: linear-gradient(174deg, #878681 0%, white 100%, rgba(0, 0, 0, 1) 100%);
+}
+
+.details p {
+    margin: 0;
+}
+
+.details-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    padding: 2px;
+}
+
+@media only screen and (min-width:320px) and (max-width:420px) {
+    #slider-card {
+        width: auto;
+        padding: 2px;
+    }
+
+    header {
+        height: 10vh;
+    }
+
+    main {
+        min-height: 80vh;
+    }
+
+    footer {
+        height: 10vh;
+    }
+
+    .details {
+        width: 100%;
+    }
+
+    .details-info {}
+
+    .logo {
+        width: 7rem;
+    }
+}
+
+@media only screen and(min-width: 425px) and (max-width:768px) {
+    #slider-card {}
 }
