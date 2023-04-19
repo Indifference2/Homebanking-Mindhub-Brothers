@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "swiper": "^9.2.3",
+    "vue-carousel": "^0.18.0"
+  }
+}
