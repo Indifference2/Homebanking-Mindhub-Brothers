@@ -6,7 +6,7 @@ createApp({
             dataCards: [],
             cardsDebit: [],
             cardsCredit: [],
-            display: 1022,
+            display: null,
         }
     },
     created(){
@@ -27,7 +27,11 @@ createApp({
             .catch(error => console.log(error))
             },
         onResize(){
-            this.display = windows.innerWidth
+            if (window.innerWidth > 1024){
+                this.display = true
+            }else{
+                this.display = false
+            }
         },
         filterTypeCard(cards){
             this.cardsDebit = cards.filter(card => card.cardType === "DEBIT")
