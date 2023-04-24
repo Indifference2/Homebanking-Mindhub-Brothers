@@ -2,10 +2,12 @@ package com.Mindhub.homebanking;
 
 import com.Mindhub.homebanking.models.*;
 import com.Mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +23,8 @@ public class HomebankingApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository,
 									  AccountRepository accountRepository,
@@ -30,13 +34,16 @@ public class HomebankingApplication {
 									  CardRepository cardRepository) {
 		return (args) -> {
 			// save a couple of customers
-			Client cliente1 = new Client("Melba", "Morel", "melba@mindhub.com");
-			clientRepository.save(cliente1);
+			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("Melba8577"));
+			clientRepository.save(client1);
+
+			Client admin = new Client("admin", "admin", "admin@gmail.com", passwordEncoder.encode("admin123"));
+			clientRepository.save(admin);
 
 			Account account1 = new Account("VIN001", 5000, LocalDateTime.now());
 			Account account2 = new Account("VIN002", 7500, LocalDateTime.now().plusDays(1));
-			cliente1.addAccount(account1);
-			cliente1.addAccount(account2);
+			client1.addAccount(account1);
+			client1.addAccount(account2);
 
 			Transaction transaction1 = new Transaction(TransactionType.CREDIT, 3250.50, "Ebay", LocalDateTime.now());
 			Transaction transaction2 = new Transaction(TransactionType.DEBIT, 50.5, "Amazon", LocalDateTime.now().plusDays(2));
@@ -75,8 +82,8 @@ public class HomebankingApplication {
 			loan1.addClientLoan(clientLoan1);
 			loan2.addClientLoan(clientLoan2);
 
-			cliente1.addClientLoan(clientLoan1);
-			cliente1.addClientLoan(clientLoan2);
+			client1.addClientLoan(clientLoan1);
+			client1.addClientLoan(clientLoan2);
 
 			clientLoanRepository.save(clientLoan1);
 			clientLoanRepository.save(clientLoan2);
@@ -84,7 +91,7 @@ public class HomebankingApplication {
 			loanRepository.save(loan1);
 			loanRepository.save(loan2);
 
-			clientRepository.save(cliente1);
+			clientRepository.save(client1);
 
 			Card card1 = new Card("Melba Morel", CardType.DEBIT, CardColor.GOLD,
 					"1234-5678-9012-3456" ,123, LocalDate.now(), LocalDate.now().plusYears(5));
@@ -92,13 +99,13 @@ public class HomebankingApplication {
 					"1234-5678-9012-4446", 456, LocalDate.now(), LocalDate.now().plusYears(5));
 			Card card3 = new Card("Melba Morel", CardType.CREDIT, CardColor.SILVER,
 					"1234-5678-9012-3456", 789, LocalDate.now(), LocalDate.now().plusYears(10));
-			cliente1.addCard(card1);
-			cliente1.addCard(card2);
-			cliente1.addCard(card3);
+			client1.addCard(card1);
+			client1.addCard(card2);
+			client1.addCard(card3);
 			cardRepository.save(card1);
 			cardRepository.save(card2);
 			cardRepository.save(card3);
-			clientRepository.save(cliente1);
+			clientRepository.save(client1);
 		};
 	}
 }

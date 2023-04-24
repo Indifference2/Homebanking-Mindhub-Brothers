@@ -1,0 +1,21 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container-form{
+    width: 25rem;
+}
+.btn-primary{
+    color: white!important;
+    background-color: #009269!important;
+}
+
+.btn-login-register{
+    border: 2px solid black;
+}
+
+form{
+    width: 15rem;
+}

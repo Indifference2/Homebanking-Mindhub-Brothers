@@ -18,7 +18,7 @@ createApp({
     },
     methods:{
         loadData(){
-            axios.get("http://localhost:8080/api/clients/1")
+            axios.get("http://localhost:8080/api/clients/current")
             .then((response)=> {
                 this.dataCards = response.data.cards
                 console.log(this.dataCards)
@@ -26,6 +26,15 @@ createApp({
             })
             .catch(error => console.log(error))
             },
+        logout(){
+            axios.get("http://localhost:8080/api/logout")
+            .then(() =>{
+                window.location.href="/web/index.html"
+            })
+            .catch(error =>{
+                console.log(error)
+            })
+        },   
         onResize(){
             if (window.innerWidth > 1024){
                 this.display = true

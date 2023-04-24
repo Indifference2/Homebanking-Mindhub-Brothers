@@ -13,7 +13,7 @@ createApp({
     },
     methods:{
         loadData(){
-            axios.get("http://localhost:8080/api/clients/1")
+            axios.get("http://localhost:8080/api/clients/current")
             .then((response)=> {
                 this.dataAccount = response.data.account
                 this.data = response.data

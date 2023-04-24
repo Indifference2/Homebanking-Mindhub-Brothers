@@ -57,6 +57,11 @@ svg {
     object-fit: cover;
 }
 
+.btn-primary{
+    color: white!important;
+    background-color: #009269!important;
+}
+
 main {
     min-height: 80vh;
     background-image: url(../img/pattern-bg.png);
