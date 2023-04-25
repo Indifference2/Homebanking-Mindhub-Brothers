@@ -28,6 +28,14 @@ public class ClientController {
     private AccountRepository accountRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    public String randomNumber(){
+        String randomNumber;
+        do {
+            int number = (int) (Math.random() * 999999 + 100000);
+            randomNumber = String.valueOf(number);
+        } while (accountRepository.findByNumber(randomNumber) != null);
+        return randomNumber;
+    }
 
     @RequestMapping("/clients")
     public List<ClientDTO> getClients(){
@@ -53,10 +61,12 @@ public class ClientController {
             return new ResponseEntity<>("Email already in use", HttpStatus.FORBIDDEN);
         }
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
-        Account newAccount = new Account("VIN001",0, LocalDateTime.now());
-        accountRepository.save(newAccount);
-        newClient.addAccount(newAccount);
         clientRepository.save(newClient);
+        String accountNumber = randomNumber();
+        Account newAccount = new Account("VIN-" + accountNumber, 0, LocalDateTime.now());
+        newClient.addAccount(newAccount);
+        accountRepository.save(newAccount);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
