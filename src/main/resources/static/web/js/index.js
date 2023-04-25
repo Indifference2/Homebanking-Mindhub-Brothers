@@ -41,24 +41,40 @@ createApp({
                 }
             })
             .then(() =>{
-                axios.post("/api/login",{
-                    email : this.email,
-                    password : this.password,
-                },{
-                    headers:{
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                let timerInterval;
+                Swal.fire({
+                    icon: "success",
+                    title: "Success",
+                    html: `Account created succesfully, you will redirect automatically in <strong></strong>`,
+                    timer: 5000,
+                    showConfirmButton : false,
+                    didOpen: () =>{
+                        const content = Swal.getHtmlContainer()
+                        timerInterval = setInterval(() =>{
+                            Swal.getHtmlContainer().querySelector('strong')
+                                .textContent = (Swal.getTimerLeft() / 1000)
+                                    .toFixed(0)
+                        }, 100)
                     }
+                    }
+                )
+                .then(()=>{
+                    this.postLoginClient()
                 })
-                .then(window.location.href="/web/pages/accounts.html")
             })
-            .catch((error) =>{
-                console.log(error)
+            .catch(() =>{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Email already in use!',
+                    confirmButtonColor : "#009269",
+                })
             })
         },
         postLoginClient(){
             axios.post("/api/login",{
-                email : this.emailLogin,
-                password : this.passwordLogin,
+                email : this.email,
+                password : this.password,
             },{
                 headers:{
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -67,8 +83,13 @@ createApp({
             .then(() =>{
                 window.location.href="/web/pages/accounts.html"
             })
-            .catch(error =>{
-                console.log(error)
+            .catch(() =>{
+                Swal.fire({
+                    title: "There is a problem!",
+                    text: "Email or password incorrect",
+                    icon: "error",
+                    confirmButtonColor : "#009269",
+                })
             })
         }
     }

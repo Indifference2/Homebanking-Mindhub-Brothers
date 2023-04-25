@@ -1,0 +1,116 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+
+
+body {
+    overflow-x: hidden;
+    background-image: url(../img/background-bg.jpg);
+    background-size: cover;
+}
+
+header {
+    height: 10vh;
+    background: rgb(135, 134, 129);
+    background: linear-gradient(353deg, #00845F 29%, #72D384 100%);
+    /* border-bottom-left-radius: 50% 20%;
+    border-bottom-right-radius: 50% 20%; */
+}
+
+.swal2-popup{
+    border: 2px solid white!important;
+    text-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+body.swal2-shown > [aria-hidden="true"] {
+    transition: 0.1s filter;
+    filter: blur(10px);
+}
+
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-nav-link {
+    border-radius: 10%;
+    color: white;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    gap: 0.5rem;
+}
+
+svg {
+    color: white;
+}
+
+.logo {
+    width: 8rem;
+    height: 5rem;
+    padding: 5px;
+    object-fit: cover;
+}
+
+.btn-primary{
+    color: white!important;
+    background-color: #009269!important;
+}
+
+.title-accounts{
+    text-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6);
+    font-family: 'Patua One', cursive;
+    color: white;
+}
+
+.title-accounts{
+    text-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6);
+    font-family: 'Patua One', cursive;
+    color: white;
+}
+
+main {
+    min-height: 80vh;
+    background-image: url(../img/pattern-bg.png);
+}
+
+.cardAccount {
+    border-radius: 10%;
+    border: 2px solid #DDFFBB;
+    background: #17A271;
+    width: 25rem;
+    box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
+    -webkit-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
+    -moz-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
+}
+
+#table-loans {
+    width: 20rem;
+    background: linear-gradient(174deg, #17A271 0%, rgba(35, 148, 177, 1) 100%, rgba(0, 0, 0, 1) 100%);
+}
+
+button>svg {
+    height: 2rem;
+    width: 5rem;
+}
+
+footer {
+    height: 10vh;
+    background: rgb(135, 134, 129);
+    background: linear-gradient(353deg, #17A271 29%, #17A271 100%);
+}

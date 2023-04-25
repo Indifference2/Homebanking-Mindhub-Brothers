@@ -1,14 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-
-html {
-    overflow-x: hidden;
-}
-
-
 
 body {
     overflow-x: hidden;
@@ -25,21 +23,27 @@ header {
 
 }
 
-h1,
-h2,
-h3 {
-    font-family: 'Poppins';
+.swal2-popup{
+    border: 2px solid white!important;
+    text-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+body.swal2-shown > [aria-hidden="true"] {
+    transition: 0.1s filter;
+    filter: blur(10px);
 }
 
 nav a {
     text-decoration: none;
     color: white;
 }
-.nav-item{
+
+.nav-item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
+
 .icon-nav-link {
     border-radius: 10%;
     color: white;
@@ -61,65 +65,17 @@ svg {
     object-fit: cover;
 }
 
-.btn-primary{
-    color: white!important;
-    background-color: #009269!important;
-}
-
-.title-accounts{
-    text-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6);
-    font-family: 'Patua One', cursive;
-    color: white;
-}
-
 main {
     min-height: 80vh;
     background-image: url(../img/pattern-bg.png);
 }
 
-.green-credit {
-    background: rgb(165, 204, 165);
-}
 
-.red-debit {
-    background: rgb(206, 124, 124);
-}
-
-.cardAccount {
-    border-radius: 10%;
-    border: 2px solid #DDFFBB;
-    background: #17A271;
-    width: 25rem;
-    box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
-    -webkit-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
-    -moz-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
-}
-
-#table-loans {
-    width: 20rem;
-    background: linear-gradient(174deg, #17A271 0%, rgba(35, 148, 177, 1) 100%, rgba(0, 0, 0, 1) 100%);
-}
-
-button>svg {
-    height: 2rem;
-    width: 5rem;
-}
-
-footer {
-    height: 10vh;
-    background: rgb(135, 134, 129);
-    background: linear-gradient(353deg, #17A271 29%, #17A271 100%);
-}
-
-/* PAGE CARDs */
-@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i');
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
 .title-debit-card {
-    text-shadow: 4px 4px 16px rgba(0,0,0,0.6);
-    font-family: 'Patua One', cursive;
+    text-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6);
     color: white;
+    font-family: 'Patua One', cursive;
     /* background-color: #8c8c8c; */
     /* background: linear-gradient(353deg, rgba(135, 134, 129, 1) 29%, rgba(255, 255, 255, 1) 100%); */
 }

@@ -27,12 +27,26 @@ createApp({
             .catch(error => console.log(error))
             },
         logout(){
-            axios.get("http://localhost:8080/api/logout")
-            .then(() =>{
-                window.location.href="/web/index.html"
-            })
-            .catch(error =>{
-                console.log(error)
+            Swal.fire({
+                title: 'Are you sure that you want to log out?',
+                background : "url(../img/bg-alert.jpg)",
+                color: "white",
+                showCancelButton: true,
+                confirmButtonText: 'Sure',
+                showLoaderOnConfirm: true,
+                confirmButtonColor : "#00845F",
+                preConfirm: (login) => {
+                    return axios.post('/api/logout')
+                        .then(response => {
+                            window.location.href="/web/index.html"
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                'Request failed: ${error}'
+                            )
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
             })
         },   
         onResize(){

@@ -20,13 +20,13 @@
                     <button class="btn btn-login-register p-1" v-on:click="register">Register</button>
                 </div>
                 <template v-if="valueForm">
-                    <form class="d-flex flex-column gap-4" @submit="loginClient">
+                    <form class="d-flex flex-column gap-4" @submit.prevent="loginClient">
                         <div class="d-flex flex-column gap-4 align-items-center">
                             <label>
-                                <input type="text" placeholder=" Email" v-model="emailLogin" required>
+                                <input type="text" placeholder=" Email" v-model="email" required>
                             </label>
                             <label>
-                                <input type="password" placeholder=" Password" v-model="passwordLogin" required>
+                                <input type="password" placeholder=" Password" v-model="password" required>
                             </label>
                         </div>
                         <button class="btn btn-primary" type="submit">Sign in</button>
@@ -36,7 +36,7 @@
                     </form>
                 </template>
                 <template v-else>
-                    <form class="d-flex flex-column gap-4" @submit.prevent="addClient">
+                    <form class="d-flex flex-column gap-4" @submit.prevent="addClient" >
                         <div class="d-flex flex-column align-items-center gap-4">
                             <label>
                                 <input type="text" placeholder=" First Name" v-model="firstName" required>
@@ -69,8 +69,7 @@
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sweetalert2.all.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/index.js"></script>
 </body>
 
