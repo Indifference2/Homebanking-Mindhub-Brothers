@@ -38,7 +38,7 @@ public class HomebankingApplication {
 			clientRepository.save(client1);
 
 			Client admin = new Client("admin", "admin", "admin@gmail.com", passwordEncoder.encode("admin123"));
-			clientRepository.save(admin);
+
 
 			Account account1 = new Account("VIN001", 5000, LocalDateTime.now());
 			Account account2 = new Account("VIN002", 7500, LocalDateTime.now().plusDays(1));
@@ -106,6 +106,8 @@ public class HomebankingApplication {
 			cardRepository.save(card2);
 			cardRepository.save(card3);
 			clientRepository.save(client1);
+
+			clientRepository.save(admin);
 		};
 	}
 }

@@ -43,6 +43,28 @@ createApp({
                 },
                 allowOutsideClick: () => !Swal.isLoading()
             })
-        },   
+        },
+        addAccount(){
+            Swal.fire({
+                title: 'Are you sure you want add a account?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                confirmButtonColor: "#009269",
+                preConfirm: () =>{
+                    return axios.post('/api/clients/current/accounts')
+                    .then(() =>{
+                        window.location.href="/web/pages/accounts.html"
+                    })
+                    .catch(error =>{
+                        Swal.fire({
+                            title: "There is a problem!",
+                            text: error.response.data,
+                            icon: "error",
+                            confirmButtonColor : "#009269",
+                        })
+                    })
+                }
+            })
+        }
     },
 }).mount("#app")

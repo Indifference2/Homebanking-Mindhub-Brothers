@@ -19,31 +19,21 @@ public class WebAuthorization{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers("/rest/**").denyAll()
                 .antMatchers("/web/style/**", "/web/js/**","/web/img/**","/web/index.html").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers("/web/pages/accounts.html","/web/pages/account.html", "/web/pages/cards.html").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.GET, "/clients/current/accounts").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST, "/api/logout").hasAuthority("CLIENT");
-
-
-//                .antMatchers(HttpMethod.GET, "/api/accounts/").hasAuthority("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/api/accounts").hasAuthority("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/api/clients/").hasAuthority("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/api/transactions/").hasAuthority("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/api/transactions").hasAuthority("ADMIN")
-
-
+                .antMatchers(HttpMethod.POST, "/api/login","/api/clients").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/accounts", "/api/accounts/", "/api/clients","/api/clients/","/api/transactions","/api/transactions/").hasAuthority("ADMIN")
+                .antMatchers("/h2-console/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/clients/current/accounts","/api/clients/current", "/api/clients/current/accounts","/api/clients/current/cards").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers("/web/pages/accounts.html","/web/pages/account.html", "/web/pages/cards.html","/web/pages/create-cards.html").hasAnyAuthority("CLIENT", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/logout", "/api/clients/current/accounts", "/api/clients/current/cards").hasAnyAuthority("CLIENT", "ADMIN")
+                .anyRequest().denyAll();
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/api/login");
-//                .defaultSuccessUrl("/web/pages/accounts.html", true);
         http.logout()
                 .logoutUrl("/api/logout")
-//                .logoutSuccessUrl("/web/index.html")
                 .deleteCookies("JSESSIONID");
 
         http.csrf().disable();

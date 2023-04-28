@@ -5,6 +5,7 @@ import com.Mindhub.homebanking.models.Account;
 import com.Mindhub.homebanking.models.Client;
 import com.Mindhub.homebanking.repositories.AccountRepository;
 import com.Mindhub.homebanking.repositories.ClientRepository;
+import com.Mindhub.homebanking.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+
 
 
 import static java.util.stream.Collectors.toList;
@@ -28,14 +29,8 @@ public class ClientController {
     private AccountRepository accountRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    public String randomNumber(){
-        String randomNumber;
-        do {
-            int number = (int) (Math.random() * 999999 + 100000);
-            randomNumber = String.valueOf(number);
-        } while (accountRepository.findByNumber(randomNumber) != null);
-        return randomNumber;
-    }
+    @Autowired
+    private String randomNumberAccount;
 
     @RequestMapping("/clients")
     public List<ClientDTO> getClients(){
@@ -48,7 +43,7 @@ public class ClientController {
     public ClientDTO getClient(Authentication authentication){
         return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
     }
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping("/clients")
 
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
@@ -62,8 +57,8 @@ public class ClientController {
         }
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientRepository.save(newClient);
-        String accountNumber = randomNumber();
-        Account newAccount = new Account("VIN-" + accountNumber, 0, LocalDateTime.now());
+
+        Account newAccount = new Account("VIN-" + randomNumberAccount , 0, LocalDateTime.now());
         newClient.addAccount(newAccount);
         accountRepository.save(newAccount);
 

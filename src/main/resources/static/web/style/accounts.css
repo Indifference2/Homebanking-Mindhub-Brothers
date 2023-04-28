@@ -86,22 +86,34 @@ svg {
 
 main {
     min-height: 80vh;
-    background-image: url(../img/pattern-bg.png);
 }
 
 .cardAccount {
     border-radius: 10%;
-    border: 2px solid #DDFFBB;
-    background: #17A271;
+    border: 3px solid #DDFFBB;
+    background: linear-gradient(174deg, #17A271 0%, #72D384 100%, rgba(0, 0, 0, 1) 100%);
     width: 25rem;
     box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
     -webkit-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
     -moz-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
+    font-family: 'Lexend', sans-serif;
+}
+
+.icon-add-account{
+    cursor:pointer;
+}
+
+.icon-transaction{
+    width: 5rem;
 }
 
 #table-loans {
-    width: 20rem;
-    background: linear-gradient(174deg, #17A271 0%, rgba(35, 148, 177, 1) 100%, rgba(0, 0, 0, 1) 100%);
+    width: 40rem;
+    border: 3px solid #DDFFBB;
+    background: linear-gradient(174deg, #17A271 0%, #72D384 100%, rgba(0, 0, 0, 1) 100%);
+    box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
+    -webkit-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
+    -moz-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
 }
 
 button>svg {
@@ -113,4 +125,20 @@ footer {
     height: 10vh;
     background: rgb(135, 134, 129);
     background: linear-gradient(353deg, #17A271 29%, #17A271 100%);
+}
+
+@media only screen and (min-width:320px) and (max-width:748px) {
+    #table-loans{
+        width: 10rem;
+        font-size: 17px!important;
+    }
+    .icon-add-account{
+        width: 3rem;
+        height: 3rem;
+    }
+}
+@media only screen and (min-width:749px) and (max-width:944px){
+    .container-accounts{
+        flex-direction: column;
+    }
 }

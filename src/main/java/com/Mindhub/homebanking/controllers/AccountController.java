@@ -1,15 +1,19 @@
 package com.Mindhub.homebanking.controllers;
 
 import com.Mindhub.homebanking.dtos.AccountDTO;
+import com.Mindhub.homebanking.models.Account;
+import com.Mindhub.homebanking.models.Client;
 import com.Mindhub.homebanking.repositories.AccountRepository;
 import com.Mindhub.homebanking.repositories.ClientRepository;
+import com.Mindhub.homebanking.utils.Utils;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +26,6 @@ public class AccountController {
     private AccountRepository accountRepository;
     @Autowired
     private ClientRepository clientRepository;
-
     @RequestMapping("/accounts")
     public List<AccountDTO> getAccounts(){
         return accountRepository.findAll()
@@ -44,5 +47,28 @@ public class AccountController {
                 .map(account -> new AccountDTO(account))
                 .collect(toList());
     }
+    @PostMapping("/clients/current/accounts")
+    public ResponseEntity<Object> createAccount(Authentication authentication){
+        Client clientAuthenticated = clientRepository.findByEmail(authentication.getName());
+        if(clientAuthenticated
+                .getAccounts()
+                .size() == 3) {
+            return new ResponseEntity<>("Max accounts reached", HttpStatus.FORBIDDEN);
+        }
+        Account newAccount = new Account("VIN-" + randomNumberAccount(), 0, LocalDateTime.now());
+        accountRepository.save(newAccount);
+        clientAuthenticated.addAccount(newAccount);
+        clientRepository.save(clientAuthenticated);
 
+
+        return new ResponseEntity<>("Account created successfully", HttpStatus.CREATED);
+    }
+    @Bean
+    private String randomNumberAccount(){
+        String randomNumberAccount;
+        do{
+            randomNumberAccount = String.valueOf(Utils.randomNumber(999999, 100000));
+        }while(accountRepository.findByNumber(randomNumberAccount)!= null);
+        return randomNumberAccount;
+    }
 }

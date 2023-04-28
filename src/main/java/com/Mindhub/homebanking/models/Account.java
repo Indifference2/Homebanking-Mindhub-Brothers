@@ -1,8 +1,11 @@
 package com.Mindhub.homebanking.models;
 
 import com.Mindhub.homebanking.dtos.AccountDTO;
+import com.Mindhub.homebanking.repositories.AccountRepository;
+import com.Mindhub.homebanking.utils.Utils;
 import com.jayway.jsonpath.JsonPath;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,6 +21,7 @@ public class Account {
     private String number;
     private LocalDateTime creationDate;
     private double balance;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;

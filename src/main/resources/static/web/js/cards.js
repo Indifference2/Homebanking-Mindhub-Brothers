@@ -42,7 +42,7 @@ createApp({
                         })
                         .catch(error => {
                             Swal.showValidationMessage(
-                                'Request failed: ${error}'
+                                'Request failed: ${error.response.data}'
                             )
                         })
                 },
