@@ -23,9 +23,9 @@ public class WebAuthorization{
                 .antMatchers(HttpMethod.POST, "/api/login","/api/clients").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/accounts", "/api/accounts/", "/api/clients","/api/clients/","/api/transactions","/api/transactions/").hasAuthority("ADMIN")
                 .antMatchers("/h2-console/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/clients/current/accounts","/api/clients/current", "/api/clients/current/accounts","/api/clients/current/cards").hasAnyAuthority("CLIENT","ADMIN")
-                .antMatchers("/web/pages/accounts.html","/web/pages/account.html", "/web/pages/cards.html","/web/pages/create-cards.html").hasAnyAuthority("CLIENT", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/logout", "/api/clients/current/accounts", "/api/clients/current/cards").hasAnyAuthority("CLIENT", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/accounts/{id}","/clients/current/accounts","/api/clients/current", "/api/clients/current/accounts","/api/clients/current/cards", "/accounts/clients").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers("/web/pages/accounts.html","/web/pages/account.html", "/web/pages/cards.html","/web/pages/create-cards.html", "/web/pages/transfers.html").hasAnyAuthority("CLIENT", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/logout", "/api/clients/current/accounts", "/api/clients/current/cards", "/api/transactions").hasAnyAuthority("CLIENT", "ADMIN")
                 .anyRequest().denyAll();
 
         http.formLogin()
