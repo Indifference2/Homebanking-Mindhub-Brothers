@@ -59,15 +59,13 @@ public class AccountController {
         accountRepository.save(newAccount);
         clientAuthenticated.addAccount(newAccount);
         clientRepository.save(clientAuthenticated);
-
-
         return new ResponseEntity<>("Account created successfully", HttpStatus.CREATED);
     }
     @Bean
     private String randomNumberAccount(){
         String randomNumberAccount;
         do{
-            randomNumberAccount = String.valueOf(Utils.randomNumber(999999, 100000));
+            randomNumberAccount = String.valueOf(Utils.randomNumber(899999, 100000));
         }while(accountRepository.findByNumber(randomNumberAccount)!= null);
         return randomNumberAccount;
     }
