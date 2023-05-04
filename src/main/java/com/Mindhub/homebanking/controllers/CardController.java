@@ -41,12 +41,6 @@ public class CardController {
             @RequestParam String color, @RequestParam String type,
             Authentication authentication){
         Client clientAuthenticated = clientRepository.findByEmail(authentication.getName());
-        if(color.isBlank()){
-            return new ResponseEntity<>("Missing Color", HttpStatus.FORBIDDEN);
-        }
-        if(type.isBlank()){
-            return new ResponseEntity<>("Missing Type", HttpStatus.FORBIDDEN);
-        }
         if (!color.equalsIgnoreCase("GOLD") && !color.equalsIgnoreCase("TITANIUM") && !color.equalsIgnoreCase("SILVER")){
             return new ResponseEntity<>("Wrong color, the colors available are 'GOLD','TITANIUM','SILVER'",HttpStatus.FORBIDDEN);
         }
@@ -75,7 +69,6 @@ public class CardController {
 
         return new ResponseEntity<>("Card created successfully",HttpStatus.CREATED);
     }
-    @Bean
     private String randomNumberCard(){
         String randomNumberCard;
         do{
@@ -87,7 +80,6 @@ public class CardController {
         }while(cardRepository.findByNumber(randomNumberCard)!= null);
         return randomNumberCard;
     }
-    @Bean
     private int randomCvvCard(){
         int randomNumberCvv;
         do{
