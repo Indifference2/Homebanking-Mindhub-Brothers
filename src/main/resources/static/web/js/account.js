@@ -27,7 +27,7 @@ createApp({
             .catch(error => console.log(error))
         },
         logout(){
-            wal.fire({
+            Swal.fire({
                 title: 'Are you sure that you want to log out?',
                 inputAttributes: {
                     autocapitalize: 'off'

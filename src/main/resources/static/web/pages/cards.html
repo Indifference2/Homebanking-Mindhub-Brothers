@@ -13,68 +13,61 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Home-banking | Cards</title>
 </head>
 
 <body>
     <div id="app">
-    <header class=" d-flex align-items-center justify-content-between">
-        <img class="logo" src="../img/Mindhub-Brothers-logo.gif" alt="mindhub-brother-logo">
-        <nav class="navbar navbar-expand-sm">
-            <div class="container-fluid d-flex">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav gap-lg-5 gap-5">
-                        <li class="nav-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                <path fill-rule="evenodd"
-                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                            </svg>
-                            <a href="./accounts.html">My Accounts</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-wallet" viewBox="0 0 16 16">
-                                <path
-                                    d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5V3zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a1.99 1.99 0 0 1-1-.268zM1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1z" />
-                            </svg>
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="" role="button" aria-expanded="false">My Cards</a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="../pages/create-cards.html" class="dropdown-item bg-transparent">
-                                        <img class="icon-add-card" src="../img/icon-add-card.png" alt="icon-add-card">
-                                        Add a card</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
-                                <path fill-rule="evenodd"
-                                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
-                            </svg>
-                            <a href="" @click.prevent="logout">Logout</a>
-                        </li>
-                    </ul>
+        <header class="d-flex gap-4">
+            <nav class="navbar navbar-expand-xxl w-100">
+                <div class="container-fluid p-0">
+                    <img class="logo navbar-brand" src="../img/Mindhub-Brothers-logo.gif" alt="mindhub-brother-logo">
+                    <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav gap-0">
+                            <li class="nav-item">
+                                <a href="./accounts.html">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                        <path fill-rule="evenodd"
+                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                    </svg>
+                                    My Accounts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./transfers.html">
+                                    <img class="icon-transfer" src="../img/icon-transfer.png" alt="view-transactions">
+                                    Make a Transfer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" @click.prevent="logout">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                                        <path fill-rule="evenodd"
+                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                                    </svg>
+                                    Logout</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
         </header>
-        <main>
+        <main class="d-flex flex-column align-items-center gap-4">
             <div class="d-flex flex-wrap justify-content-center">
-                <div class="d-flex gap-5 flex-column justify-content-center align-items-center p-4">
-                    <h2 class="title-debit-card text-center text-decoration-underline fs-1">
+                <div class="d-flex gap-3 flex-column justify-content-center align-items-center p-2">
+                    <h2 class="title-debit-card text-center fs-1">
                         Debit Cards</h2>
                     <template v-for="card of cardsDebit">
-                        <div class="p-4">
+                        <div class="p-2">
                             <div id="slider-card" :class="{'slider-bg-gold':card.cardColor === 'GOLD', 
                                 'slider-bg-titanum':card.cardColor === 'TITANIUM',
                                 'slider-bg-silver':card.cardColor === 'SILVER'}">
@@ -88,9 +81,11 @@
                                             +"-"+
                                             card.thruDate.split("-")[1]}}</p>
                                     </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="font-monospace fs-5 m-0">{{card.cardHolder}}</p>
                                     <img class="visa-logo" src="../img/visa-img.png" alt="visa-logo">
                                 </div>
-                                <p class="font-monospace fs-5 m-0">{{card.cardHolder}}</p>
                             </div>
                             <div class="details d-flex flex-column justify-content-between p-2 mt-4">
                                 <div class="details-info mt-2">
@@ -123,11 +118,11 @@
                         </div>
                     </template>
                 </div>
-                <div class="d-flex gap-5 flex-column align-items-center p-4">
-                    <h2 class="title-debit-card text-center text-decoration-underline fs-1">
+                <div class="d-flex gap-3 flex-column align-items-center p-2">
+                    <h2 class="title-debit-card text-center fs-1">
                         Credit Cards</h2>
                     <template v-for="card of cardsCredit">
-                        <div class="p-4">
+                        <div class="p-2">
                             <div id="slider-card" :class="{'slider-bg-gold':card.cardColor === 'GOLD', 
                                 'slider-bg-titanum':card.cardColor === 'TITANIUM', 
                                 'slider-bg-silver':card.cardColor === 'SILVER'}">
@@ -135,15 +130,15 @@
                                 <img class="visa-chip" src="../img/chip-visa-card.png" alt="chip-visa-card">
                                 <p class="font-monospace fs-2">{{card.number}}</p>
                                 <div class="d-flex justify-content-between">
-                                    <div class="d-flex gap-4 mt-2">
-                                        <p class="font-monospace fs-5 m-0">ThruDate:
-                                            {{card.thruDate.split("-")[0]
-                                            +"-"+
-                                            card.thruDate.split("-")[1]}}</p>
-                                    </div>
+                                    <p class="font-monospace fs-5 m-0">ThruDate:
+                                        {{card.thruDate.split("-")[0]
+                                        +"-"+
+                                        card.thruDate.split("-")[1]}}</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="font-monospace fs-5 m-0">{{card.cardHolder}}</p>
                                     <img class="visa-logo" src="../img/visa-img.png" alt="visa-logo">
                                 </div>
-                                <p class="font-monospace fs-5 m-0">{{card.cardHolder}}</p>
                             </div>
                             <div class="details d-flex flex-column justify-content-between p-2 mt-4">
                                 <div class="details-info mt-2">
@@ -177,6 +172,15 @@
                     </template>
                 </div>
             </div>
+            <template v-if="dataCards.length !== 6" v-cloak>
+                <btn v-cloak type="button" class="m-0 title-debit-card btn btn-primary align-items-center"
+                    @click="redirectAddCard">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                </btn>
+            </template>
         </main>
     </div>
     <footer>

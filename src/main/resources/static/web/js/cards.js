@@ -48,6 +48,9 @@ createApp({
                 },
                 allowOutsideClick: () => !Swal.isLoading()
             })
+        },
+        redirectAddCard(){
+            window.location.href="/web/pages/create-cards.html"
         },   
         onResize(){
             if (window.innerWidth > 1024){
