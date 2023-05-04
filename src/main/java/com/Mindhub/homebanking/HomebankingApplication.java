@@ -40,8 +40,8 @@ public class HomebankingApplication {
 			Client admin = new Client("admin", "admin", "admin@gmail.com", passwordEncoder.encode("admin123"));
 
 
-			Account account1 = new Account("VIN001", 5000, LocalDateTime.now());
-			Account account2 = new Account("VIN002", 7500, LocalDateTime.now().plusDays(1));
+			Account account1 = new Account("VIN-001", 100000000, LocalDateTime.now());
+			Account account2 = new Account("VIN-002", 7500, LocalDateTime.now().plusDays(1));
 			client1.addAccount(account1);
 			client1.addAccount(account2);
 
