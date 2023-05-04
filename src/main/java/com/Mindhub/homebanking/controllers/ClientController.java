@@ -43,13 +43,23 @@ public class ClientController {
     public ClientDTO getClient(Authentication authentication){
         return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
     }
-    @PostMapping("/clients")
 
+    @RequestMapping("/accounts/clients")
+    public ResponseEntity<String> getName(@RequestParam String numberAccount){
+        Account accountDestiny = accountRepository.findByNumber(numberAccount);
+        Client clientDestiny = accountDestiny.getClient();
+        if (clientDestiny == null){
+            return new ResponseEntity<>("Client destiny not found", HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(clientDestiny.getFirstName() + " " + clientDestiny.getLastName(), HttpStatus.OK);
+    }
+
+    @PostMapping("/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
 
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
         if (clientRepository.findByEmail(email) !=  null) {
