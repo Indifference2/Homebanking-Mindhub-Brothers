@@ -1,8 +1,8 @@
 package com.Mindhub.homebanking.dtos;
 public class LoanApplicationDTO {
     private long id;
-    private double amount;
-    private int payments;
+    private Double amount;
+    private Integer payments;
     private String accountNumber;
 
     public LoanApplicationDTO(long id, double amount, int payments,String accountNumber){
@@ -13,8 +13,7 @@ public class LoanApplicationDTO {
     }
 
     public long getId() {return id;}
-
-    public double getAmount() {return amount;}
-    public int getPayments() {return payments;}
+    public Double getAmount() {return amount;}
+    public Integer getPayments() {return payments;}
     public String getAccountNumber() {return accountNumber;}
 }
