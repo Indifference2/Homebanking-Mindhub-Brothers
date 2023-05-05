@@ -3,10 +3,10 @@ package com.Mindhub.homebanking.dtos;
 import com.Mindhub.homebanking.models.ClientLoan;
 
 public class ClientLoanDTO {
-    long id;
-    String nameLoan;
-    double amount;
-    int payments;
+    private long id;
+    private String nameLoan;
+    private double amount;
+    private int payments;
 
     public ClientLoanDTO(ClientLoan clientLoan){
         this.id = clientLoan.getId();
