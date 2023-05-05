@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body{
+    overflow-x: hidden;
+}
+
 .container-form{
     width: 25rem;
 }
@@ -18,4 +22,9 @@
 
 form{
     width: 15rem;
+}
+
+.img-login{
+    width: 25rem;
+    object-fit: cover;
 }
