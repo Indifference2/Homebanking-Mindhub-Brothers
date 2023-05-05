@@ -55,14 +55,11 @@ public class LoanController {
         if(accountReceiver == null){
             return new ResponseEntity<>("Account doesn't exist", HttpStatus.FORBIDDEN);
         }
-        if(String.valueOf(loanApplicationDTO.getAmount()).isBlank()){
+        if(loanApplicationDTO.getAmount().isNaN()){
             return new ResponseEntity<>("Amount can't be on blank", HttpStatus.FORBIDDEN);
         }
-        if(String.valueOf(loanApplicationDTO.getPayments()).isBlank()){
-            return new ResponseEntity<>("Payment can't be on blank", HttpStatus.FORBIDDEN);
-        }
-        if(loanApplicationDTO.getAmount() < 0){
-            return new ResponseEntity<>("Amount can't be negative",HttpStatus.FORBIDDEN);
+        if(loanApplicationDTO.getAmount() < 1){
+            return new ResponseEntity<>("Amount can't be negative or below 1",HttpStatus.FORBIDDEN);
         }
         if(loanApplicationDTO.getAmount() > loan.getMaxAmount()){
             return new ResponseEntity<>("Amount can't be greater than max amount permitted", HttpStatus.FORBIDDEN);
