@@ -12,10 +12,16 @@
 </head>
 
 <body>
-    <main id="app">
-        <div class="d-flex flex-column align-items-center justify-content-center">
-            <img class="img-login"src="./img/img-index.jpg" alt="illustration-bank">
-            <div class="container-form d-flex flex-column align-items-center gap-4">
+    <main id="app" class="d-flex flex-wrap justify-content-center">
+        <div class="container-logo-title-img col-sm-6 d-flex flex-column">
+            <img src="./img/Mindhub-Brothers-logo.gif" id="logo" alt="logo-mindhub-brothers">
+            <div class="container-title-img col-12">
+                <h1 class="text-center">Hello! Welcome to Mindhub Brothers Bank</h1>
+                <img class="img-login" src="./img/img-index.png" alt="illustration-bank">
+            </div>
+        </div>
+        <div class="container-form d-flex flex-column col-12 col-sm-6 align-items-center gap-4">
+            <div class="d-flex flex-column gap-4 align-items-center mb-5">
                 <div>
                     <button class="btn btn-login-register p-1" @click="login">Login</button>
                     <button class="btn btn-login-register p-1" v-on:click="register">Register</button>
@@ -24,10 +30,10 @@
                     <form class="d-flex flex-column gap-4" @submit.prevent="loginClient">
                         <div class="d-flex flex-column gap-4 align-items-center">
                             <label>
-                                <input type="text" placeholder=" Email" v-model="email" required>
+                                <input type="text" placeholder=" Email" v-model="emailLogin" required>
                             </label>
                             <label>
-                                <input type="password" placeholder=" Password" v-model="password" required>
+                                <input type="password" placeholder=" Password" v-model="passwordLogin" required>
                             </label>
                         </div>
                         <button class="btn btn-primary" type="submit">Sign in</button>
@@ -37,7 +43,7 @@
                     </form>
                 </template>
                 <template v-else>
-                    <form class="d-flex flex-column gap-4" @submit.prevent="addClient" >
+                    <form class="d-flex flex-column gap-4" @submit.prevent="addClient">
                         <div class="d-flex flex-column align-items-center gap-4">
                             <label>
                                 <input type="text" placeholder=" First Name" v-model="firstName" required>
@@ -46,10 +52,10 @@
                                 <input type="text" placeholder=" Last Name" v-model="lastName" required>
                             </label>
                             <label>
-                                <input type="text" placeholder=" Email" v-model="email" required>
+                                <input type="text" placeholder=" Email" v-model="emailRegister" required>
                             </label>
                             <label>
-                                <input type="password" placeholder=" Password" v-model="password" required>
+                                <input type="password" placeholder=" Password" v-model="passwordRegister" required>
                             </label>
                             <label class="text-center">
                                 <input type="checkbox" name="terms" required>

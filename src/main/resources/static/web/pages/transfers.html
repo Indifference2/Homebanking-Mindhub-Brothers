@@ -97,11 +97,11 @@
                 <div class="d-flex justify-content-center p-2">
                     <div
                         :class="{'container-active':optionTransfer == true, 'container-inactive':optionTransfer == false}">
-                        <p @click="optionTransfer = true">Own Accounts</p>
+                        <p @click="optionTransfer = true, activePageOwnAccounts = 1, activePageThirdPartyAccounts = 1">Own Accounts</p>
                     </div>
                     <div
                         :class="{'container-active':optionTransfer == false, 'container-inactive':optionTransfer == true}">
-                        <p @click="optionTransfer = false">Third Party Account</p>
+                        <p @click="optionTransfer = false, activePageThirdPartyAccounts = 1, activePageOwnAccounts = 1">Third Party Account</p>
                     </div>
                 </div>
                 <template v-if="optionTransfer">
@@ -116,19 +116,19 @@
                                             <option value="" disabled>Choose your account</option>
                                             <template v-for="account of accountClient">
                                                 <option :value="account.number">{{account.number + ' US$' +
-                                                    account.balance}}
+                                                    account.balance.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}}
                                                 </option>
                                             </template>
                                         </select>
                                     </label>
                                     <label class="d-flex align-items-center form-label">
                                         <p class="m-0 col-4">To</p>
-                                        <select class="form-control" name="account-credit" v-model="accountOwnDestiny"
+                                        <select class="form-control" :disabled="accountOwnOrigin.length < 1 ? true : false" name="account-credit" v-model="accountOwnDestiny"
                                             required>
                                             <option value="" disabled>Choose your account</option>
                                             <template v-for="account of accountClient">
-                                                <option :value="account.number">{{account.number + ' US$' +
-                                                    account.balance}}
+                                                <option :disabled="accountOwnOrigin == account.number ? true : false" :value="account.number">{{account.number + ' US$' +
+                                                    account.balance.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}}
                                                 </option>
                                             </template>
                                         </select>
@@ -176,7 +176,7 @@
                                 </div>
                                 <div class="details-info">
                                     <p class="fw-medium">Amount:</p>
-                                    <p class="fw-bold">{{amount}}</p>
+                                    <p class="fw-bold">{{amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}}</p>
                                 </div>
                                 <div class="details-info">
                                     <p class="fw-medium">Description:</p>
@@ -202,7 +202,7 @@
                                             <option value="" disabled>Choose your account</option>
                                             <template v-for="account of accountClient">
                                                 <option :value="account.number">{{account.number + ' US$' +
-                                                    account.balance}}
+                                                    account.balance.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}}
                                                 </option>
                                             </template>
                                         </select>

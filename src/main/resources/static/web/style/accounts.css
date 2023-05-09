@@ -63,7 +63,6 @@ nav a {
     justify-content: center;
     padding: 0.5rem;
     gap: 0.5rem;
-
 }
 
 svg {
@@ -122,45 +121,10 @@ main {
     display: none !important;
 }
 
-.bg {
-    animation: slide 3s ease-in-out infinite alternate;
-    background-image: linear-gradient(-60deg, #BFCCB5 50%, #7C96AB 50%);
-    bottom: 0;
-    left: -50%;
-    opacity: .5;
-    position: fixed;
-    right: -50%;
-    top: 0;
-    z-index: -1;
-}
-
-.bg2 {
-    animation-direction: alternate-reverse;
-    animation-duration: 4s;
-}
-
-.bg3 {
-    animation-duration: 5s;
-}
-
-h1 {
-    font-family: monospace;
-}
-
-@keyframes slide {
-    0% {
-        transform: translateX(-25%);
-    }
-
-    100% {
-        transform: translateX(25%);
-    }
-}
-
 .cardAccount {
     border-radius: 10%;
     /* background: linear-gradient(174deg, #17A271 0%, #72D384 100%, rgba(0, 0, 0, 1) 100%); */
-    width: 15rem;
+    width: 18rem;
     box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
     -webkit-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
     -moz-box-shadow: 0px 5px 8px 1px rgba(0, 0, 0, 0.83);
@@ -229,6 +193,10 @@ footer {
     .title-new-account {
         position: relative;
         top: 0;
+    }
+
+    .cardAccount{
+        width: 18rem;
     }
 }
 

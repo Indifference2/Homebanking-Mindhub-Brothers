@@ -6,10 +6,11 @@ createApp({
             valueForm : true,
             firstName: "",
             lastName : "",
-            email : "",
-            password : "",
+            emailRegister : "",
+            passwordRegister : "",
             passwordLogin : "",
             emailLogin : "",
+
         }
     },
     created(){
@@ -33,8 +34,8 @@ createApp({
             axios.post("/api/clients",{
                 firstName : this.firstName,
                 lastName : this.lastName,
-                email : this.email,
-                password : this.password,
+                email : this.emailRegister,
+                password : this.passwordRegister,
             },{
                 headers:{
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -59,6 +60,8 @@ createApp({
                     }
                 )
                 .then(()=>{
+                    this.emailLogin = this.emailRegister
+                    this.passwordLogin = this.passwordRegister
                     this.postLoginClient()
                 })
             })
@@ -73,8 +76,8 @@ createApp({
         },
         postLoginClient(){
             axios.post("/api/login",{
-                email : this.email,
-                password : this.password,
+                email : this.emailLogin,
+                password : this.passwordLogin,
             },{
                 headers:{
                     'Content-Type': 'application/x-www-form-urlencoded'
