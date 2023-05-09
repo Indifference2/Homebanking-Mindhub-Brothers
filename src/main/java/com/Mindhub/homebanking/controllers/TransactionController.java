@@ -8,6 +8,9 @@ import com.Mindhub.homebanking.models.TransactionType;
 import com.Mindhub.homebanking.repositories.AccountRepository;
 import com.Mindhub.homebanking.repositories.ClientRepository;
 import com.Mindhub.homebanking.repositories.TransactionRepository;
+import com.Mindhub.homebanking.services.AccountService;
+import com.Mindhub.homebanking.services.ClientService;
+import com.Mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,21 +29,14 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class TransactionController {
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     @RequestMapping("/transactions")
     public List<TransactionDTO> getTransactions(){
-        return transactionRepository.findAll()
-                .stream()
-                .map(transaction -> new TransactionDTO(transaction))
-                .collect(toList());
-    }
-    @RequestMapping("/transactions/{id}")
-    public Optional<TransactionDTO> getTransaction(@PathVariable Long id){
-        return transactionRepository.findById(id).map(transaction -> new TransactionDTO(transaction));
+        return transactionService.getTransactions();
     }
     @Transactional
     @PostMapping("/transactions")
@@ -49,9 +45,10 @@ public class TransactionController {
             @RequestParam String numberAccountOrigin, @RequestParam String numberAccountDestiny,
             Authentication authentication){
 
-        Account accountOrigin = accountRepository.findByNumber(numberAccountOrigin);
-        Account accountDestiny = accountRepository.findByNumber(numberAccountDestiny);
-        Client clientAuthenticated = clientRepository.findByEmail(authentication.getName());
+        Account accountOrigin = accountService.findByNumber(numberAccountOrigin);
+        Account accountDestiny = accountService.findByNumber(numberAccountDestiny);
+        Client clientAuthenticated = clientService.findByEmail(authentication.getName());
+
         if(accountOrigin == null){
             return new ResponseEntity<>("Account origin doesn't exist", HttpStatus.FORBIDDEN);
         }
@@ -84,15 +81,15 @@ public class TransactionController {
         Transaction transactionDebit = new Transaction(TransactionType.DEBIT, balance, description, LocalDateTime.now());
         accountOrigin.addTransaction(transactionDebit);
         accountOrigin.setBalance(accountOrigin.getBalance() - balance);
-        transactionRepository.save(transactionDebit);
+        transactionService.saveTransaction(transactionDebit);
 
         Transaction transactionCredit = new Transaction(TransactionType.CREDIT, balance, description, LocalDateTime.now());
         accountDestiny.addTransaction(transactionCredit);
         accountDestiny.setBalance(accountDestiny.getBalance() + balance);
-        transactionRepository.save(transactionCredit);
+        transactionService.saveTransaction(transactionCredit);
 
-        accountRepository.save(accountOrigin);
-        accountRepository.save(accountDestiny);
+        accountService.saveAccount(accountOrigin);
+        accountService.saveAccount(accountDestiny);
 
         return new ResponseEntity<>("The transactions was successfully", HttpStatus.CREATED);
     }
