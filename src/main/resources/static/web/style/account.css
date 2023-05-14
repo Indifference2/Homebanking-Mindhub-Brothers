@@ -91,6 +91,15 @@ svg {
 
 main {
     min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.label-control{
+    display: flex;
+    gap: 2rem;
 }
 
 table{
@@ -103,4 +112,25 @@ table{
 
 .red-debit {
     background: rgb(206, 124, 124);
+}
+
+@media only screen and (min-width:1400px){ 
+    .navbar-collapse{
+        width: auto!important;
+        flex-grow: 0!important;
+    }
+    .navbar-nav{
+        margin-top: 0!important;
+    }
+    .container-fluid{
+        justify-content: center!important;
+    }
+    .logo{
+        position: absolute;
+        align-self: flex-start!important;
+        left: 0;
+    }
+    header{
+        height: 10vh;
+    }
 }

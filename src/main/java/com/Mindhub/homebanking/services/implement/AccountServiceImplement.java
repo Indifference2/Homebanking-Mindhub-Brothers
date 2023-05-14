@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -33,17 +32,12 @@ public class AccountServiceImplement implements AccountService {
     }
 
     @Override
-    public Optional<AccountDTO> getAccountsById(long id) {
-        return Optional.of(new AccountDTO(findById(id)));
-    }
-
-    @Override
     public void saveAccount(Account account) {
         accountRepository.save(account);
     }
 
     @Override
-    public List<AccountDTO> getAccount() {
+    public List<AccountDTO> getAccounts() {
         return accountRepository.findAll()
                 .stream()
                 .map(account -> new AccountDTO(account))

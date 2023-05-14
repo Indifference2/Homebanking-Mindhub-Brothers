@@ -28,11 +28,11 @@ public class AccountController {
     private ClientService clientService;
     @RequestMapping("/accounts")
     public List<AccountDTO> getAccounts(){
-        return accountService.getAccount();
+        return accountService.getAccounts();
     }
     @RequestMapping("/accounts/{id}")
-    public Optional<AccountDTO> getAccount(@PathVariable Long id){
-        return accountService.getAccountsById(id);
+    public AccountDTO getAccount(@PathVariable Long id){
+        return new AccountDTO(accountService.findById(id));
     }
     @RequestMapping("/clients/current/accounts")
     public List<AccountDTO> getAccountsAuthenticated(Authentication authentication){
