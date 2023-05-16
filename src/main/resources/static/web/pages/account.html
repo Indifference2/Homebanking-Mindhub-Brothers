@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" class="">
         <header class="d-flex gap-4">
             <nav class="navbar navbar-expand-xxl w-100">
                 <div class="container-fluid p-0">
@@ -67,12 +67,17 @@
                 </div>
             </nav>
         </header>
-        <main>
-            <label class="label-control">
-                Start Date
-                <input type="date" class="form-control" name="date-start" min="">
-                <input type="date" class="form-control" name="date-end" max="">
-            </label>
+        <main class="w-100">
+            <div class="d-flex gap-4">
+                <label class="label-control flex-column align-items-center">
+                    Start Date
+                    <input type="date" class="form-control" name="date-start" min="">
+                </label>
+                <label class="label-control flex-column align-items-center">
+                    End Date
+                    <input type="date" class="form-control" name="date-end" max="">
+                </label>
+            </div>
             <table class="table table-bordered table-sm mt-4">
                 <thead>
                     <tr>

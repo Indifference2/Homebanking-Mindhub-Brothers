@@ -37,10 +37,9 @@ public class HomebankingApplication {
 //			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("Melba8577"));
 //			clientRepository.save(client1);
 //
-//			Client admin = new Client("admin", "admin", "admin@gmail.com", passwordEncoder.encode("admin123"));
 //
 //
-//			Account account1 = new Account("VIN-001", 100000000, LocalDateTime.now());
+//			Account account1 = new Account("VIN-001", 10000, LocalDateTime.now());
 //			Account account2 = new Account("VIN-002", 7500, LocalDateTime.now().plusDays(1));
 //			client1.addAccount(account1);
 //			client1.addAccount(account2);
@@ -107,7 +106,6 @@ public class HomebankingApplication {
 //			cardRepository.save(card3);
 //			clientRepository.save(client1);
 //
-//			clientRepository.save(admin);
 //		};
 //	}
 }

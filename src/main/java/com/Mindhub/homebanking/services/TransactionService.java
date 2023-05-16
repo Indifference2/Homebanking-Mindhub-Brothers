@@ -1,14 +1,17 @@
 package com.Mindhub.homebanking.services;
 
 import com.Mindhub.homebanking.dtos.TransactionDTO;
+import com.Mindhub.homebanking.models.Account;
 import com.Mindhub.homebanking.models.Transaction;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 public interface TransactionService {
     List<TransactionDTO> getAllTransactions();
     void saveTransaction(Transaction transaction);
-    List<TransactionDTO> findByAccountId(Long accoundId);
-//    List<Transaction> getTransactionsDateBetween(Date startDate, Date endDate);
+    List<TransactionDTO> findByAccountId(Long accountId);
+    List<TransactionDTO> getTransactionsByIdAndDateBetween(Account account, LocalDateTime  startDate, LocalDateTime endDate);
 }
