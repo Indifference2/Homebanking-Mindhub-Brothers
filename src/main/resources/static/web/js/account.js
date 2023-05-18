@@ -1,32 +1,57 @@
-const {createApp} = Vue 
+const { createApp } = Vue
 
 createApp({
-    data(){
-        return{
-            transactions : [],
-            totalBalance : 0,
-            accountId : "",
-            data : [],
+    data() {
+        return {
+            transactions: [],
+            totalBalance: 0,
+            accountId: "",
+            data: [],
             transactionsOrder: [],
+            startDate: "",
+            endDate: "",
+            transactionsDateBetween: [],
         }
     },
-    created(){
+    created() {
         const params = new URLSearchParams(location.search)
         this.accountId = params.get('id')
         this.loadData()
     },
-    methods:{
-        loadData(){
-            axios.get("http://localhost:8080/api/accounts/" + this.accountId)
-            .then(response => {
-                this.totalBalance = response.data.balance
-                this.transactions = response.data.transaction
-                this.transactionsOrder = this.transactions.sort((a,b) => b.id - a.id)
-                this.debitBalance()
+    mounted() {
+
+    },
+    computed: {
+        filterDateBetween() {
+            axios.get("http://localhost:8080/api/accounts/" + this.accountId + "/transactions/dateBetween", {
+                params: {
+                    startDate: this.startDate,
+                    endDate: this.endDate,
+                }
+            }).then(response => {
+                this.transactionsDateBetween = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
             })
-            .catch(error => console.log(error))
+                .catch(error => {
+                    console.log(error)
+                })
         },
-        logout(){
+    },
+
+    methods: {
+        loadData() {
+            axios.get("http://localhost:8080/api/accounts/" + this.accountId + "/transactions")
+                .then(response => {
+                    this.totalBalance = response.data.balance
+                    this.transactions = response.data
+                    this.transactionsOrder = this.transactions.sort((a, b) => new Date(b.date) - new Date(a.date))
+                    this.endDate = this.transactionsOrder[0].date.split('T')[0]
+                    this.startDate = this.transactionsOrder[this.transactionsOrder.length - 1].date.split('T')[0]
+                    this.filterDateBetween()
+                    this.debitBalance()
+                })
+                .catch(error => console.log(error))
+        },
+        logout() {
             Swal.fire({
                 title: 'Are you sure that you want to log out?',
                 inputAttributes: {
@@ -35,11 +60,11 @@ createApp({
                 showCancelButton: true,
                 confirmButtonText: 'Sure',
                 showLoaderOnConfirm: true,
-                confirmButtonColor : "#009269",
+                confirmButtonColor: "#009269",
                 preConfirm: (login) => {
                     return axios.post('/api/logout')
                         .then(response => {
-                            window.location.href="/web/index.html"
+                            window.location.href = "/web/index.html"
                         })
                         .catch(error => {
                             Swal.showValidationMessage(
@@ -50,16 +75,49 @@ createApp({
                 allowOutsideClick: () => !Swal.isLoading()
             })
         },
-        isDebit(transaction){
+        isDebit(transaction) {
             return transaction === 'DEBIT'
         },
-        debitBalance(){
-            for(currentTransaction of this.transactions){
-                if(this.isDebit(currentTransaction.type)){
+        debitBalance() {
+            for (currentTransaction of this.transactions) {
+                if (this.isDebit(currentTransaction.type)) {
                     this.totalBalance -= currentTransaction.amount
                 }
             }
             return this.totalBalance
+        },
+        downloadPdf() {
+            Swal.fire({
+                title: 'Are you sure that you want to download transactions?',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Sure',
+                showLoaderOnConfirm: true,
+                confirmButtonColor: "#009269",
+                preConfirm: (login) => {
+                    return axios.post("http://localhost:8080/api/accounts/" + this.accountId + "/transactions/dateBetween/pdf?startDate="+ this.startDate + "&endDate="+ this.endDate)
+
+                        .then(response => {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Success",
+                                text: "Downloaded succesfully",
+                                showConfirmButton: true,
+                            })
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: "There is a problem!",
+                                text: error.response.data,
+                                icon: "error",
+                                confirmButtonColor: "#009269",
+                            })
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
         },
     }
 }).mount("#app")

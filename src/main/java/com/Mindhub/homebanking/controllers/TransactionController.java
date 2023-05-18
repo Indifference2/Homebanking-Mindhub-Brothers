@@ -93,7 +93,7 @@ public class TransactionController {
         Date end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
 
         LocalDateTime startLocalDateTime = Utils.dateToLocalDateTime(start);
-        LocalDateTime endLocalDateTime = Utils.dateToLocalDateTime(end);
+        LocalDateTime endLocalDateTime = Utils.dateToLocalDateTime(end).plusDays(1).minusSeconds(1);
 
 ;       return new ResponseEntity<>(transactionService.getTransactionsByIdAndDateBetween(accountRequest, startLocalDateTime, endLocalDateTime),HttpStatus.ACCEPTED);
     }
@@ -123,13 +123,13 @@ public class TransactionController {
         Date end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
 
         LocalDateTime startLocalDateTime = Utils.dateToLocalDateTime(start);
-        LocalDateTime endLocalDateTime = Utils.dateToLocalDateTime(end);
+        LocalDateTime endLocalDateTime = Utils.dateToLocalDateTime(end).plusDays(1).minusSeconds(1);
 
         List<TransactionDTO> transactionsDTOList = transactionService.getTransactionsByIdAndDateBetween(accountRequest, startLocalDateTime, endLocalDateTime);
 
         Document document = new Document();
 
-        PdfWriter.getInstance(document, new FileOutputStream("output.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Rates\\Documents\\Transaction from " + startDate + " to " + endDate + ".pdf"));
         document.open();
 
         Image logo = Image.getInstance("C:\\Users\\Rates\\Documents\\Java Projects\\Homebanking-Mindhub-Brothers\\src\\main\\resources\\static\\web\\img\\logo.png");
