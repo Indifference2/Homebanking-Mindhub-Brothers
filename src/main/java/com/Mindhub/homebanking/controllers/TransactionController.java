@@ -57,13 +57,14 @@ public class TransactionController {
         if(accountRequest == null){
             return new ResponseEntity<>("The account doesn't exist", HttpStatus.FORBIDDEN);
         }
+        if(!clientService.isAdmin(authentication)){
+            if(accountService.accountBelongToClient(authentication, accountRequest)){
+                return new ResponseEntity<>("This account doesn't belong to you", HttpStatus.FORBIDDEN);
+            }
+        }
         AccountDTO accountDTORequest = new AccountDTO(accountRequest);
 
-        if(clientAuthenticated.getAccount()
-                .stream()
-                .noneMatch(account -> account.getNumber().equals(accountRequest.getNumber()))){
-            return new ResponseEntity<>("This account doesn't belong to you", HttpStatus.FORBIDDEN);
-        }
+
         return new ResponseEntity<>(accountDTORequest.getTransaction(), HttpStatus.ACCEPTED);
     }
 
@@ -77,9 +78,7 @@ public class TransactionController {
         }
         AccountDTO accountDTORequest = new AccountDTO(accountRequest);
 
-        if(clientAuthenticated.getAccount()
-                .stream()
-                .noneMatch(account -> account.getNumber().equals(accountRequest.getNumber()))){
+        if(accountService.accountBelongToClient(authentication, accountRequest)){
             return new ResponseEntity<>("This account doesn't belong to you", HttpStatus.FORBIDDEN);
         }
 
@@ -113,9 +112,7 @@ public class TransactionController {
         if(endDate.isBlank()){
             return new ResponseEntity<>("End date can't be on blank", HttpStatus.FORBIDDEN);
         }
-        if(clientAuthenticated.getAccount()
-                .stream()
-                .noneMatch(account -> account.getNumber().equals(accountRequest.getNumber()))){
+        if(accountService.accountBelongToClient(authentication, accountRequest)){
             return new ResponseEntity<>("This account doesn't belong to you", HttpStatus.FORBIDDEN);
         }
 
@@ -150,7 +147,7 @@ public class TransactionController {
         subTitle.setSpacingBefore(20);
         document.add(subTitle);
 
-        PdfPTable table = new PdfPTable(5);
+        PdfPTable table = new PdfPTable(6);
         table.setWidthPercentage(100);
 
         PdfPCell cellAmount = new PdfPCell(new Paragraph("Amount"));
@@ -173,13 +170,18 @@ public class TransactionController {
         cellTime.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cellTime);
 
+        PdfPCell cellCurrentBalance = new PdfPCell(new Paragraph("Current Balance"));
+        cellCurrentBalance.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cellCurrentBalance);
+
+
 
         for (TransactionDTO transactionDTO: transactionsDTOList){
             String date = Utils.getStringDateFromLocalDateTime(transactionDTO.getDate());
             String hour = Utils.getStringHourFromLocalDateTime(transactionDTO.getDate());
 
             PdfPCell cellTransactionAmount = new PdfPCell(new Paragraph(
-                    transactionDTO.getType().name().equals("DEBIT")? "-" + (NumberFormat.getNumberInstance(Locale.US).format(transactionDTO.getAmount())) : NumberFormat.getNumberInstance(Locale.US).format(transactionDTO.getAmount())));
+                    transactionDTO.getType().name().equals("DEBIT")? "US$ -" + (NumberFormat.getNumberInstance(Locale.US).format(transactionDTO.getAmount())) : "US$ " + NumberFormat.getNumberInstance(Locale.US).format(transactionDTO.getAmount())));
             cellTransactionAmount.setHorizontalAlignment(Element.ALIGN_CENTER);
             cellTransactionAmount.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cellTransactionAmount.setFixedHeight(50);
@@ -208,6 +210,12 @@ public class TransactionController {
             cellTransactionTime.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cellTransactionTime.setFixedHeight(50);
             table.addCell(cellTransactionTime);
+
+            PdfPCell cellTransactionCurrentBalance = new PdfPCell(new Paragraph("US$ " +NumberFormat.getNumberInstance(Locale.US).format(transactionDTO.getBalanceAccount())));
+            cellTransactionCurrentBalance.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cellTransactionCurrentBalance.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cellTransactionCurrentBalance.setFixedHeight(50);
+            table.addCell(cellTransactionCurrentBalance);
 
         }
         document.add(table);
@@ -238,7 +246,7 @@ public class TransactionController {
                 .stream().noneMatch(account -> account.getNumber().contains(numberAccountOrigin))){
             return new ResponseEntity<>("This account doesn't belong you", HttpStatus.FORBIDDEN);
         }
-        if(accountOrigin.getBalance() <= balance){
+        if(accountOrigin.getBalance() < balance){
             return new ResponseEntity<>("You don't have enough balance", HttpStatus.FORBIDDEN);
         }
         if(numberAccountOrigin.equals(numberAccountDestiny)){
@@ -257,12 +265,12 @@ public class TransactionController {
             return new ResponseEntity<>("Account destiny is in blank", HttpStatus.FORBIDDEN);
         }
 
-        Transaction transactionDebit = new Transaction(TransactionType.DEBIT, balance, description, LocalDateTime.now());
+        Transaction transactionDebit = new Transaction(TransactionType.DEBIT, balance, "to " + accountDestiny.getNumber() + " " + description, LocalDateTime.now(),accountOrigin.getBalance() - balance, true);
         accountOrigin.addTransaction(transactionDebit);
         accountOrigin.setBalance(accountOrigin.getBalance() - balance);
         transactionService.saveTransaction(transactionDebit);
 
-        Transaction transactionCredit = new Transaction(TransactionType.CREDIT, balance, description, LocalDateTime.now());
+        Transaction transactionCredit = new Transaction(TransactionType.CREDIT, balance,  "from " + accountDestiny.getNumber() + " "+ description, LocalDateTime.now(), accountDestiny.getBalance() + balance, true);
         accountDestiny.addTransaction(transactionCredit);
         accountDestiny.setBalance(accountDestiny.getBalance() + balance);
         transactionService.saveTransaction(transactionCredit);
