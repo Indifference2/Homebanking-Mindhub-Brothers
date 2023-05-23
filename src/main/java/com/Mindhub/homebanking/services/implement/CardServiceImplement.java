@@ -30,9 +30,10 @@ public class CardServiceImplement implements CardService {
         return cardRepository.findByCvv(cvv);
     }
     @Override
-    public List<CardDTO> getCards(Authentication authentication) {
+    public List<CardDTO> getCardsActive(Authentication authentication) {
         return clientService.findByEmail(authentication.getName()).getCards()
                 .stream()
+                .filter(card -> card.isActive())
                 .map(card -> new CardDTO(card))
                 .collect(toList());
     }
@@ -51,7 +52,7 @@ public class CardServiceImplement implements CardService {
             String fourthNumber = String.valueOf(Utils.randomNumber(1000, 9999));
             randomNumberCard = firstNumber + "-" + secondNumber + "-" + thirdNumber + "-" + fourthNumber;
         }while(findByNumber(randomNumberCard)!= null);
-        return null;
+        return randomNumberCard;
     }
 
     @Override

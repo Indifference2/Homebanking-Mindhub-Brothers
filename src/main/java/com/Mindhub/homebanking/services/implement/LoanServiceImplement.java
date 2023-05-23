@@ -17,8 +17,8 @@ public class LoanServiceImplement implements LoanService {
     @Autowired
     private LoanRepository loanRepository;
     @Override
-    public Optional<Loan> findById(long id) {
-        return loanRepository.findById(id);
+    public Loan findById(long id) {
+        return loanRepository.findById(id).orElse(null);
     }
     @Override
     public List<LoanDTO> getLoans() {
@@ -26,5 +26,10 @@ public class LoanServiceImplement implements LoanService {
                 .stream()
                 .map(loan -> new LoanDTO(loan))
                 .collect(toList());
+    }
+
+    @Override
+    public void saveLoan(Loan loan) {
+        loanRepository.save(loan);
     }
 }

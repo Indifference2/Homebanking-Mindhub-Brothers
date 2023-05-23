@@ -2,6 +2,7 @@ package com.Mindhub.homebanking.controllers;
 
 import com.Mindhub.homebanking.dtos.ClientDTO;
 import com.Mindhub.homebanking.models.Account;
+import com.Mindhub.homebanking.models.AccountType;
 import com.Mindhub.homebanking.models.Client;
 import com.Mindhub.homebanking.services.AccountService;
 import com.Mindhub.homebanking.services.ClientService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
@@ -23,23 +25,13 @@ public class ClientController {
     private AccountService accountService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @RequestMapping("/clients")
-    public List<ClientDTO> getClients(){
-        return clientService.getClients();
-    }
-    @RequestMapping("/clients/current")
+    @GetMapping("/clients/current")
     public ClientDTO getClient(Authentication authentication){
         return clientService.getCurrentClient(authentication);
     }
-    @RequestMapping("/accounts/clients")
-    public ResponseEntity<String> getName(@RequestParam String numberAccount){
-        Account accountDestiny = accountService.findByNumber(numberAccount);
-        Client clientDestiny = accountDestiny.getClient();
-        if (clientDestiny == null){
-            return new ResponseEntity<>("Client destiny not found", HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(clientDestiny.getFirstName() + " " + clientDestiny.getLastName(), HttpStatus.OK);
+    @GetMapping("/clients/current/rol")
+    public GrantedAuthority getClientRol(Authentication authentication){
+        return clientService.getClientRol(authentication);
     }
     @PostMapping("/clients")
     public ResponseEntity<Object> register(
@@ -64,7 +56,7 @@ public class ClientController {
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientService.saveClient(newClient);
 
-        Account newAccount = new Account("VIN-" + accountService.randomNumberAccount() , 0, LocalDateTime.now());
+        Account newAccount = new Account("VIN-" + accountService.randomNumberAccount() , 0, LocalDateTime.now(), true, AccountType.SAVING);
         newClient.addAccount(newAccount);
         accountService.saveAccount(newAccount);
 

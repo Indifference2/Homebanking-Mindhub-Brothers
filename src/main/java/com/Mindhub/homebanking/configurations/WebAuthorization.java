@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,15 +21,20 @@ public class WebAuthorization{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers("/web/style/**", "/web/js/**","/web/img/**","/web/index.html").permitAll()
+                .antMatchers(HttpMethod.GET,"/web/style/**", "/web/js/**","/web/img/**","/web/index.html","/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login","/api/clients").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/accounts", "/api/accounts/", "/api/clients","/api/clients/","/api/transactions","/api/transactions/").hasAuthority("ADMIN")
-                .antMatchers("/h2-console/**").hasAuthority("ADMIN")
+                /* Controllers request*/
                 .antMatchers(HttpMethod.GET, "/api/accounts/{id}","/api/clients/current/accounts","/api/clients/current",
-                        "/api/clients/current/accounts","/api/clients/current/cards", "/api/accounts/clients",
-                        "/api/loans", "/api/accounts/{id}/transactions", "/api/transactions/date", "/api/accounts/{id}/transactions/dateBetween").hasAnyAuthority("CLIENT","ADMIN")
-                .antMatchers("/web/pages/**").hasAnyAuthority("CLIENT", "ADMIN")
+                        "/api/clients/current/accounts","/api/clients/current/cards", "/api/accounts/clients/name",
+                        "/api/loans", "/api/accounts/{id}/transactions", "/api/transactions/date", "/api/accounts/{id}/transactions/dateBetween",  "/api/clients/current/rol").hasAnyAuthority("CLIENT","ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/logout", "/api/clients/current/accounts", "/api/clients/current/cards", "/api/transactions","/api/loans", "/api/accounts/{id}/transactions/dateBetween/pdf").hasAnyAuthority("CLIENT", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/clients/current/cards", "/api/clients/current/accounts").hasAnyAuthority("CLIENT", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/manager/loans").hasAuthority("ADMIN")
+                /* Html request*/
+                .antMatchers(HttpMethod.GET,"/web/pages/accounts.html","/web/pages/account.html", "/web/pages/cards.html", "/web/pages/create-cards.html", "/web/pages/loan-application.html", "/web/pages/transfers.html").hasAnyAuthority("CLIENT", "ADMIN")
+                .antMatchers(HttpMethod.GET,"/web/pages/**").hasAuthority("ADMIN")
+
+
                 .anyRequest().denyAll();
 
         http.formLogin()
@@ -68,5 +75,6 @@ public class WebAuthorization{
         }
 
     }
+
 }
 

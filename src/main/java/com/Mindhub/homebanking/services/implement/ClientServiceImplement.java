@@ -6,9 +6,11 @@ import com.Mindhub.homebanking.repositories.ClientRepository;
 import com.Mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -38,5 +40,17 @@ public class ClientServiceImplement implements ClientService {
     public void saveClient(Client client) {
         clientRepository.save(client);
     }
+
+    @Override
+    public GrantedAuthority getClientRol(Authentication authentication) {
+        return authentication.getAuthorities().stream().collect(toList()).get(0);
+    }
+
+    @Override
+    public boolean isAdmin(Authentication authentication) {
+        return authentication.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("ADMIN"));
+    }
+
+
 
 }

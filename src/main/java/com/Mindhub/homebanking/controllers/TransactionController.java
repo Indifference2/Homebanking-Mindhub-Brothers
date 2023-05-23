@@ -10,8 +10,8 @@ import com.Mindhub.homebanking.models.TransactionType;
 import com.Mindhub.homebanking.services.AccountService;
 import com.Mindhub.homebanking.services.ClientService;
 import com.Mindhub.homebanking.services.TransactionService;
-import com.Mindhub.homebanking.utils.Utils;
 
+import com.Mindhub.homebanking.utils.UtilsTransaction;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -44,12 +44,12 @@ public class TransactionController {
     private AccountService accountService;
     @Autowired
     private ClientService clientService;
-    @RequestMapping("/transactions")
+    @GetMapping("/transactions")
     public List<TransactionDTO> getTransactions(){
         return transactionService.getAllTransactions();
     }
 
-    @RequestMapping("/accounts/{id}/transactions")
+    @GetMapping("/accounts/{id}/transactions")
     public ResponseEntity<Object> getTransactionsByAccountId(@PathVariable Long id, Authentication authentication){
         Account accountRequest = accountService.findById(id);
         ClientDTO clientAuthenticated = clientService.getCurrentClient(authentication);
@@ -68,15 +68,13 @@ public class TransactionController {
         return new ResponseEntity<>(accountDTORequest.getTransaction(), HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping("/accounts/{id}/transactions/dateBetween")
+    @GetMapping("/accounts/{id}/transactions/dateBetween")
     public ResponseEntity<Object> getTransactionsByIdAndDateBetween (@PathVariable Long id, @RequestParam String startDate, @RequestParam String endDate, Authentication authentication) throws ParseException {
         Account accountRequest = accountService.findById(id);
-        ClientDTO clientAuthenticated = clientService.getCurrentClient(authentication);
 
         if(accountRequest == null){
             return new ResponseEntity<>("The account doesn't exist", HttpStatus.FORBIDDEN);
         }
-        AccountDTO accountDTORequest = new AccountDTO(accountRequest);
 
         if(accountService.accountBelongToClient(authentication, accountRequest)){
             return new ResponseEntity<>("This account doesn't belong to you", HttpStatus.FORBIDDEN);
@@ -88,11 +86,11 @@ public class TransactionController {
         if(endDate.isBlank()){
             return new ResponseEntity<>("End date can't be on blank", HttpStatus.FORBIDDEN);
         }
-        Date start = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
-        Date end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+        Date start = UtilsTransaction.stringtoDate(startDate);
+        Date end = UtilsTransaction.stringtoDate(endDate);
 
-        LocalDateTime startLocalDateTime = Utils.dateToLocalDateTime(start);
-        LocalDateTime endLocalDateTime = Utils.dateToLocalDateTime(end).plusDays(1).minusSeconds(1);
+        LocalDateTime startLocalDateTime = UtilsTransaction.dateToLocalDateTime(start);
+        LocalDateTime endLocalDateTime = UtilsTransaction.dateToLocalDateTime(end).plusDays(1).minusSeconds(1);
 
 ;       return new ResponseEntity<>(transactionService.getTransactionsByIdAndDateBetween(accountRequest, startLocalDateTime, endLocalDateTime),HttpStatus.ACCEPTED);
     }
@@ -116,11 +114,11 @@ public class TransactionController {
             return new ResponseEntity<>("This account doesn't belong to you", HttpStatus.FORBIDDEN);
         }
 
-        Date start = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
-        Date end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+        Date start = UtilsTransaction.stringtoDate(startDate);
+        Date end = UtilsTransaction.stringtoDate(endDate);
 
-        LocalDateTime startLocalDateTime = Utils.dateToLocalDateTime(start);
-        LocalDateTime endLocalDateTime = Utils.dateToLocalDateTime(end).plusDays(1).minusSeconds(1);
+        LocalDateTime startLocalDateTime = UtilsTransaction.dateToLocalDateTime(start);
+        LocalDateTime endLocalDateTime = UtilsTransaction.dateToLocalDateTime(end).plusDays(1).minusSeconds(1);
 
         List<TransactionDTO> transactionsDTOList = transactionService.getTransactionsByIdAndDateBetween(accountRequest, startLocalDateTime, endLocalDateTime);
 
@@ -177,8 +175,8 @@ public class TransactionController {
 
 
         for (TransactionDTO transactionDTO: transactionsDTOList){
-            String date = Utils.getStringDateFromLocalDateTime(transactionDTO.getDate());
-            String hour = Utils.getStringHourFromLocalDateTime(transactionDTO.getDate());
+            String date = UtilsTransaction.getStringDateFromLocalDateTime(transactionDTO.getDate());
+            String hour = UtilsTransaction.getStringHourFromLocalDateTime(transactionDTO.getDate());
 
             PdfPCell cellTransactionAmount = new PdfPCell(new Paragraph(
                     transactionDTO.getType().name().equals("DEBIT")? "US$ -" + (NumberFormat.getNumberInstance(Locale.US).format(transactionDTO.getAmount())) : "US$ " + NumberFormat.getNumberInstance(Locale.US).format(transactionDTO.getAmount())));

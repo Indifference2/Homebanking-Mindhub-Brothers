@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style/manager.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Client Manager</title>
+</head>
+
+<body class="hidden">
+    <div class="center1" id="onload">
+        <div class="lds-facebook">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <main id="app" class="d-flex flex-column justify-content-center">
+        <div class=" d-flex flex-column flex-lg-row gap-4 justify-content-center align-items-center p-4-lg">
+            <form class="d-flex flex-column p-4 col-12 col-sm-6 col-lg-6" @submit.prevent="createLoan">
+                <h1 class="text-center">Create a Loan</h1>
+                <label class="form-label">
+                    Name Loan:
+                    <input class="form-control" type="text" placeholder="Example : Travel" v-model="nameLoan">
+                </label>
+                <label class="form-label">
+                    Max Amount:
+                    <input class="form-control" type="number" placeholder="Example : 20.000" v-model="maxAmount">
+                </label>
+                <label class="form-label">
+                    Payments:
+                    <input class="form-control" type="text" placeholder="Example : 6,12,24" v-model="paymentsLoan">
+                </label>
+                <label class="form-label">
+                    Interest
+                    <input class="form-control" step="0.1" type="number" placeholder="Example: 10" v-model="interestLoan">
+                </label>
+                <button class="btn btn-primary" type="submit">Create</button>
+            </form>
+            <div class="d-flex flex-column align-items-center">
+                <h2 class="text-center">Currents Loans</h2>
+                <table class="table table-unbordered col-6">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Max Amount</th>
+                            <th>Payments</th>
+                            <th>Interest</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="loan of dataLoans">
+                            <tr>
+                                <td>{{loan.name}}</td>
+                                <td>US$ {{loan.maxAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                                <td>{{loan.payments.toString()}}</td>
+                                <td>{{loan.interest}}%</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/manager.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</body>
+
+</html>

@@ -5,13 +5,6 @@ public class LoanApplicationDTO {
     private Integer payments;
     private String accountNumber;
 
-    public LoanApplicationDTO(long id, double amount, int payments,String accountNumber){
-        this.id = id;
-        this.amount = amount;
-        this.payments = payments;
-        this.accountNumber = accountNumber;
-    }
-
     public long getId() {return id;}
     public Double getAmount() {return amount;}
     public Integer getPayments() {return payments;}

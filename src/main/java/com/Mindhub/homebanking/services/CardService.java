@@ -9,7 +9,7 @@ import java.util.List;
 public interface CardService {
     Card findByNumber(String number);
     Card findByCvv(int cvv);
-    List<CardDTO> getCards(Authentication authentication);
+    List<CardDTO> getCardsActive(Authentication authentication);
     void saveCard(Card card);
     String randomNumberCard();
     int randomCvvCard();

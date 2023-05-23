@@ -14,19 +14,15 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="hidden">
+    <div class="center1" id="onload">
+        <div class="lds-facebook">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
     <div id="app">
-        <!-- <div class="banter-loader" ref="loader" @load="">
-            <div class="banter-loader__box"></div>
-            <div class="banter-loader__box"></div>
-            <div class="banter-loader__box"></div>
-            <div class="banter-loader__box"></div>
-            <div class="banter-loader__box"></div>
-            <div class="banter-loader__box"></div>
-            <div class="banter-loader__box"></div>
-            <div class="banter-loader__box"></div>
-            <div class="banter-loader__box"></div>
-          </div> -->
         <header class="d-flex gap-4">
             <nav class="navbar navbar-expand-xxl w-100">
                 <div class="container-fluid p-0">
@@ -62,6 +58,17 @@
                                     <img class="icon-transfer" src="../img/icon-transfer.png" alt="view-transactions">
                                     Make a Transfer</a>
                             </li>
+                            <template v-if="roleUser.authority == 'ADMIN'">
+                                <li class="nav-item">
+                                    <a href="./manager.html">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+                                        </svg>
+                                        Manager</a>
+                                </li>
+                            </template>
                             <li class="nav-item">
                                 <a href="" @click.prevent="logout">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -79,43 +86,49 @@
             </nav>
         </header>
         <main class="w-100">
-            <div class="d-flex gap-3 gap-sm-4 align-items-center flex-column flex-sm-row">
-                <label class="label-control gap-2 flex-column align-items-center">
-                    Start Date
-                    <input type="date" class="form-control" name="date-start" min="" v-model="startDate">
-                </label>
-                <label class="label-control gap-2 flex-column align-items-center">
-                    End Date
-                    <input type="date" class="form-control" name="date-end" max="" v-model="endDate">
-                </label>
-                <button class="btn btn-primary align-self-sm-end" @click="downloadPdf">
-                    Download Transactions
-                </button>
-            </div>
-            <table class="table table-bordered table-sm mt-4">
-                <thead>
-                    <tr>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Type</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{filterDateBetween}}
-                    <template v-for="transaction of transactionsDateBetween">
-                        <tr
-                            :class="{'green-credit':transaction.type === 'CREDIT', 'red-debit':transaction.type === 'DEBIT'}">
-                            <td>${{transaction.amount}}</td>
-                            <td>{{transaction.date.split('T')[0]}}</td>
-                            <td>{{transaction.description}}</td>
-                            <td>{{transaction.type}}</td>
-                            <td>{{transaction.date.split('T')[1].split('.')[0]}}</td>
+            <img src="../img/transaction-ilu.png" class="img-log-transaction" alt="transactions-rafiki">
+            <div class="d-flex flex-column">
+                <div class="d-flex gap-3 gap-sm-4 align-items-center justify-content-between flex-column flex-sm-row">
+                    <label class="label-control gap-2 flex-column align-items-center">
+                        Start Date
+                        <input type="date" class="form-control" name="date-start" min="" v-model="startDate">  
+                    </label>
+                    <label class="label-control gap-2 flex-column align-items-center">
+                        End Date
+                        <input type="date" class="form-control" name="date-end" max="" v-model="endDate">
+                    </label>
+                    <button class="btn btn-primary align-self-sm-end" @click="downloadPdf">
+                        Download Transactions
+                    </button>
+                </div>
+                <table class="table table-responsive table-bordered mt-4">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Time</th>
+                            <th>Current Balance</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {{filterDateBetween}}
+                        <template v-for="transaction of transactionsDateBetween">
+                            <tr
+                                :class="{'green-credit':transaction.type === 'CREDIT', 'red-debit':transaction.type === 'DEBIT'}">
+                                <td>${{transaction.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</td>
+                                <td>{{transaction.date.split('T')[0]}}</td>
+                                <td>{{transaction.description}}</td>
+                                <td>{{transaction.type}}</td>
+                                <td>{{transaction.date.split('T')[1].split('.')[0]}}</td>
+                                <td>${{transaction.balanceAccount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
@@ -125,6 +138,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/account.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 
 </html>

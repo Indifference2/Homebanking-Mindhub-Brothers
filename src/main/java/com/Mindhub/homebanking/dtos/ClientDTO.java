@@ -20,6 +20,7 @@ public class ClientDTO {
         this.email = client.getEmail();
         this.accounts = client.getAccounts().
                 stream()
+                .filter(account -> account.isActive())
                 .map(account -> new AccountDTO(account))
                 .collect(toSet());
         this.clientLoans = client.getClientLoans()
@@ -27,15 +28,14 @@ public class ClientDTO {
                 .map(clientLoan -> new ClientLoanDTO(clientLoan))
                 .collect(toSet());
         this.cards = client.getCards()
-                .stream().map(card -> new CardDTO(card))
+                .stream()
+                .filter(card -> card.isActive())
+                .map(card -> new CardDTO(card))
                 .collect(toSet());
     }
 
     public Long getId() {
         return id;
-    }
-    public Set<AccountDTO> getAccount() {
-        return accounts;
     }
     public String getFirstName() {
         return firstName;

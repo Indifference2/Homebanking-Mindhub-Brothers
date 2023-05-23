@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -49,5 +50,18 @@ public class TransactionServiceImplement implements TransactionService {
                 .stream()
                 .map(transaction -> new TransactionDTO(transaction))
                 .collect(toList());
+    }
+
+    @Override
+    public void changeAllTransactionsActive(Set<Transaction> transactions) {
+        for (Transaction transaction : transactions){
+            transaction.setActive(false);
+        }
+        transactionRepository.saveAll(transactions);
+    }
+
+    @Override
+    public void saveAllTransactions(Set<Transaction> transactions) {
+        transactionRepository.saveAll(transactions);
     }
 }

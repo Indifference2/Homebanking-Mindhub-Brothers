@@ -17,7 +17,14 @@
     <title>Home-banking | Cards</title>
 </head>
 
-<body>
+<body class="hidden">
+    <div class="center1" id="onload">
+        <div class="lds-facebook">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
     <div id="app">
         <header class="d-flex gap-4">
             <nav class="navbar navbar-expand-xxl w-100">
@@ -45,6 +52,17 @@
                                     <img class="icon-transfer" src="../img/icon-transfer.png" alt="view-transactions">
                                     Make a Transfer</a>
                             </li>
+                            <template v-if="roleUser.authority == 'ADMIN'">
+                                <li class="nav-item">
+                                    <a href="./manager.html">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+                                        </svg>
+                                        Manager</a>
+                                </li>
+                            </template>
                             <li class="nav-item">
                                 <a href="" @click.prevent="logout">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -61,124 +79,152 @@
                 </div>
             </nav>
         </header>
-        <main class="d-flex flex-column align-items-center gap-4">
-            <div class="d-flex flex-wrap justify-content-center">
-                <div class="d-flex gap-3 flex-column justify-content-center align-items-center p-2">
-                    <h2 class="title-debit-card text-center fs-1">
-                        Debit Cards</h2>
-                    <template v-for="card of cardsDebit">
-                        <div class="p-2">
-                            <div id="slider-card" :class="{'slider-bg-gold':card.cardColor === 'GOLD', 
-                                'slider-bg-titanum':card.cardColor === 'TITANIUM',
+        <main class="d-flex flex-column align-items-center gap-2 justify-content-center">
+            <div class="d-flex align-items-center flex-column justify-content-center flex-xxl-row">
+                <img src="../img/Gift card-rafiki.png" class="img-card-girl align-self-xxl-start" alt="card-rafiki">
+                <div class="d-flex flex-column flex-xxl-row align-items-center justify-content-center">
+                    <div class="d-flex gap-3 flex-column justify-content-center align-items-center p-2">
+                        <template v-if="cardsDebit.length >= 1">
+                            <h2 class="title-debit-card text-center fs-1">
+                                Debit Cards</h2>
+                        </template>
+                        <template v-for="card of cardsDebit">
+                            <div class="">
+                                <div id="slider-card" :class="{'slider-bg-gold':card.cardColor === 'GOLD', 
+                                    'slider-bg-titanum':card.cardColor === 'TITANIUM',
+                                    'slider-bg-silver':card.cardColor === 'SILVER'}">
+                                    <div class="d-flex justify-content-between">
+                                        <h3>Mindhub Brothers</h3>
+                                        <button class="btn" :id='card.number' @click="deleteCard(card.number)">
+                                            <svg class="trash-icon-card" xmlns="http://www.w3.org/2000/svg" width="5"
+                                                height="5" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <img class="visa-chip" src="../img/chip-visa-card.png" alt="chip-visa-card">
+                                    <p class="font-monospace fs-2">{{card.number}}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex mt-2 gap-4">
+                                            <p class="font-monospace fs-5 m-0">ThruDate:
+                                                {{card.thruDate.split("-")[0]
+                                                +"-"+
+                                                card.thruDate.split("-")[1]}}</p>
+                                            <template v-if="checkExpiry(card.thruDate)">
+                                                <p class="warning">Card Expired</p>
+                                            </template>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="font-monospace fs-5 m-0">{{card.cardHolder}}</p>
+                                        <img class="visa-logo" src="../img/visa-img.png" alt="visa-logo">
+                                    </div>
+                                </div>
+                                <div class="details d-flex flex-column justify-content-between p-2 mt-4">
+                                    <div class="details-info mt-2">
+                                        <p class="fw-medium">Bank:</p>
+                                        <p class="fw-bold">Mindhub Brothers</p>
+                                    </div>
+                                    <div class="details-info">
+                                        <p class="fw-medium">Card Number:</p>
+                                        <p class="fw-bold">{{card.number}}</p>
+                                    </div>
+                                    <div class="details-info">
+                                        <p class="fw-medium">Expiry Date:</p>
+                                        <p class="fw-bold">{{card.thruDate.split("-")[0] +"-"+
+                                            card.thruDate.split("-")[1]}}
+                                        </p>
+                                    </div>
+                                    <div class="details-info">
+                                        <p class="fw-medium">Name On Card:</p>
+                                        <p class="fw-bold">{{card.cardHolder}}</p>
+                                    </div>
+                                    <div class="details-info">
+                                        <p class="fw-medium">Type:</p>
+                                        <p class="fw-bold">{{card.cardType + " " + card.cardColor}}</p>
+                                    </div>
+                                    <div class="details-info">
+                                        <p class="fw-medium">CVV:</p>
+                                        <p class="fw-bold">{{card.cvv}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="d-flex gap-3 flex-column align-items-center align-self-start p-2">
+                        <template v-if="cardsCredit.length >= 1">
+                            <h2 class="title-debit-card text-center fs-1">
+                                Credit Cards</h2>
+                        </template>
+                        <template v-for="card of cardsCredit">
+                            <div class="">
+                                <div id="slider-card" :class="{'slider-bg-gold':card.cardColor === 'GOLD', 
+                                'slider-bg-titanum':card.cardColor === 'TITANIUM', 
                                 'slider-bg-silver':card.cardColor === 'SILVER'}">
-                                <h3>Mindhub Brothers</h3>
-                                <img class="visa-chip" src="../img/chip-visa-card.png" alt="chip-visa-card">
-                                <p class="font-monospace fs-2">{{card.number}}</p>
-                                <div class="d-flex justify-content-between">
-                                    <div class="d-flex mt-2 gap-4">
+                                    <div class="d-flex justify-content-between">
+                                        <h3>Mindhub Brothers</h3>
+                                        <button class="btn" :id='card.number' @click="deleteCard(card.number)">
+                                            <svg class="trash-icon-card" xmlns="http://www.w3.org/2000/svg" width="5"
+                                                height="5" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <img class="visa-chip" src="../img/chip-visa-card.png" alt="chip-visa-card">
+                                    <p class="font-monospace fs-2">{{card.number}}</p>
+                                    <div class="d-flex justify-content-between">
                                         <p class="font-monospace fs-5 m-0">ThruDate:
                                             {{card.thruDate.split("-")[0]
                                             +"-"+
                                             card.thruDate.split("-")[1]}}</p>
+                                        <template v-if="checkExpiry(card.thruDate)">
+                                            <p class="warning">Card Expired</p>
+                                        </template>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="font-monospace fs-5 m-0">{{card.cardHolder}}</p>
+                                        <img class="visa-logo" src="../img/visa-img.png" alt="visa-logo">
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between">
-                                    <p class="font-monospace fs-5 m-0">{{card.cardHolder}}</p>
-                                    <img class="visa-logo" src="../img/visa-img.png" alt="visa-logo">
+                                <div class="details d-flex flex-column justify-content-between p-2 mt-4">
+                                    <div class="details-info mt-2">
+                                        <p class="fw-medium">Bank:</p>
+                                        <p class="fw-bold">Mindhub Brothers</p>
+                                    </div>
+                                    <div class="details-info">
+                                        <p class="fw-medium">Card Number:</p>
+                                        <p class="fw-bold">{{card.number}}</p>
+                                    </div>
+                                    <div class="details-info">
+                                        <p class="fw-medium">Expiry Date:</p>
+                                        <p class="fw-bold">{{card.thruDate.split("-")[0] +"-"+
+                                            card.thruDate.split("-")[1]}}
+                                        </p>
+                                    </div>
+                                    <div class="details-info">
+                                        <p class="fw-medium">Name On Card:</p>
+                                        <p class="fw-bold">{{card.cardHolder}}</p>
+                                    </div>
+                                    <div class="details-info">
+                                        <p class="fw-medium">Type:</p>
+                                        <p class="fw-bold">{{card.cardType + " " + card.cardColor}}</p>
+                                    </div>
+                                    <div class="details-info">
+                                        <p class="fw-medium">CVV:</p>
+                                        <p class="fw-bold">{{card.cvv}}</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="details d-flex flex-column justify-content-between p-2 mt-4">
-                                <div class="details-info mt-2">
-                                    <p class="fw-medium">Bank:</p>
-                                    <p class="fw-bold">Mindhub Brothers</p>
-                                </div>
-                                <div class="details-info">
-                                    <p class="fw-medium">Card Number:</p>
-                                    <p class="fw-bold">{{card.number}}</p>
-                                </div>
-                                <div class="details-info">
-                                    <p class="fw-medium">Expiry Date:</p>
-                                    <p class="fw-bold">{{card.thruDate.split("-")[0] +"-"+
-                                        card.thruDate.split("-")[1]}}
-                                    </p>
-                                </div>
-                                <div class="details-info">
-                                    <p class="fw-medium">Name On Card:</p>
-                                    <p class="fw-bold">{{card.cardHolder}}</p>
-                                </div>
-                                <div class="details-info">
-                                    <p class="fw-medium">Type:</p>
-                                    <p class="fw-bold">{{card.cardType + " " + card.cardColor}}</p>
-                                </div>
-                                <div class="details-info">
-                                    <p class="fw-medium">CVV:</p>
-                                    <p class="fw-bold">{{card.cvv}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-                <div class="d-flex gap-3 flex-column align-items-center p-2">
-                    <h2 class="title-debit-card text-center fs-1">
-                        Credit Cards</h2>
-                    <template v-for="card of cardsCredit">
-                        <div class="p-2">
-                            <div id="slider-card" :class="{'slider-bg-gold':card.cardColor === 'GOLD', 
-                                'slider-bg-titanum':card.cardColor === 'TITANIUM', 
-                                'slider-bg-silver':card.cardColor === 'SILVER'}">
-                                <h3>Mindhub Brothers</h3>
-                                <img class="visa-chip" src="../img/chip-visa-card.png" alt="chip-visa-card">
-                                <p class="font-monospace fs-2">{{card.number}}</p>
-                                <div class="d-flex justify-content-between">
-                                    <p class="font-monospace fs-5 m-0">ThruDate:
-                                        {{card.thruDate.split("-")[0]
-                                        +"-"+
-                                        card.thruDate.split("-")[1]}}</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <p class="font-monospace fs-5 m-0">{{card.cardHolder}}</p>
-                                    <img class="visa-logo" src="../img/visa-img.png" alt="visa-logo">
-                                </div>
-                            </div>
-                            <div class="details d-flex flex-column justify-content-between p-2 mt-4">
-                                <div class="details-info mt-2">
-                                    <p class="fw-medium">Bank:</p>
-                                    <p class="fw-bold">Mindhub Brothers</p>
-                                </div>
-                                <div class="details-info">
-                                    <p class="fw-medium">Card Number:</p>
-                                    <p class="fw-bold">{{card.number}}</p>
-                                </div>
-                                <div class="details-info">
-                                    <p class="fw-medium">Expiry Date:</p>
-                                    <p class="fw-bold">{{card.thruDate.split("-")[0] +"-"+
-                                        card.thruDate.split("-")[1]}}
-                                    </p>
-                                </div>
-                                <div class="details-info">
-                                    <p class="fw-medium">Name On Card:</p>
-                                    <p class="fw-bold">{{card.cardHolder}}</p>
-                                </div>
-                                <div class="details-info">
-                                    <p class="fw-medium">Type:</p>
-                                    <p class="fw-bold">{{card.cardType + " " + card.cardColor}}</p>
-                                </div>
-                                <div class="details-info">
-                                    <p class="fw-medium">CVV:</p>
-                                    <p class="fw-bold">{{card.cvv}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
+                        </template>
+                    </div>
                 </div>
             </div>
             <template v-if="dataCards.length !== 6" v-cloak>
-                <btn v-cloak type="button" class="m-0 title-debit-card btn btn-primary align-items-center"
+                <btn v-cloak type="button" class="m-0 title-debit-card btn btn-primary align-items-center text-black"
                     @click="redirectAddCard">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                    </svg>
+                    Click here if you want add a card
                 </btn>
             </template>
         </main>
@@ -193,6 +239,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/cards.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 
 </html>

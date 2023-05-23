@@ -18,7 +18,14 @@
     <title>Mindhub Brothers | Ask for a loan</title>
 </head>
 
-<body>
+<body class="hidden">
+    <div class="center1" id="onload">
+        <div class="lds-facebook">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
     <div id="App">
         <header class="d-flex gap-4">
             <nav class="navbar navbar-expand-xxl w-100">
@@ -55,6 +62,17 @@
                                     <img class="icon-transfer" src="../img/icon-transfer.png" alt="view-transactions">
                                     Make a Transfer</a>
                             </li>
+                            <template v-if="roleUser.authority == 'ADMIN'">
+                                <li class="nav-item">
+                                    <a href="./manager.html">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+                                        </svg>
+                                        Manager</a>
+                                </li>
+                            </template>
                             <li class="nav-item">
                                 <a href="" @click.prevent="logout">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -83,7 +101,7 @@
                             class="container-loan btn btn-primary gap-4" @click="">
                             <img src="../img/pay.png" class="img-mortgage-loan" alt="give-money-hand">
                             <h5>{{loan.name}}</h5>
-                            <p>Max Amount: ${{loan.maxAmount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}}</p>
+                            <p>Max Amount: US${{loan.maxAmount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}}</p>
                         </button>
                     </a>
                 </template>
@@ -94,15 +112,19 @@
                         <label>
                             <h5>Amount</h5>
                             <input oninput="this.value = 
-                            !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" onKeyPress="if(this.value.length== 7) return false;" step=".01" type="number" class="form-control amount" v-model="amount" required
-                                placeholder="0.0000,00">
+                            !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                                onKeyPress="if(this.value.length== 7) return false;" step=".01" type="number"
+                                class="form-control amount" v-model="amount" required placeholder="0.0000,00">
                         </label>
                         <label class="form-label">
                             <h5>Select your payments</h5>
-                            <select class="form-control" :disabled="this.amount.length < 1 ? true : false" v-model="payment" required>
+                            <select class="form-control" :disabled="this.amount.length < 1 ? true : false"
+                                v-model="payment" required>
                                 <option value="" disabled>Please select a value</option>
                                 <template v-for="payment of loanSelectPayments">
-                                    <option :value="payment">{{payment  + ' (CFT 20%) $' + ((amount * 0.2) / payment).toFixed(2)}}</option>
+                                    <option :value="payment">{{payment + " (CFT " + loanInterest + "%) $" + ((amount *
+                                        (loanInterest / 100)) / payment).toFixed(2) + " Total to pay: US$"+ ((amount *
+                                        (loanInterest / 100)) * payment + amount).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") }}</option>
                                 </template>
                             </select>
                         </label>
@@ -128,6 +150,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/loan-application.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 
 </html>

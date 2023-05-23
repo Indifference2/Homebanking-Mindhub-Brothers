@@ -18,16 +18,16 @@ createApp({
             description: "",
             descriptionThird : "",
             amountThird : null,
+            num: 0,
+            roleUser : "",
         }
     },
     created(){
         this.loadData()
+        this.getRole()
     },
     mounted(){
         console.log(this.$refs)
-    },
-    watch:{
-        
     },
     methods:{
         loadData(){
@@ -36,13 +36,19 @@ createApp({
                 this.accountClient = response.data
             })
         },
+        getRole(){
+            axios.get("/api/clients/current/rol")
+            .then(response =>{
+                this.roleUser = response.data
+            })
+        },
         updateCustomValidity(){
             let inputRef = this.$refs.input
             inputRef.oninvalid = inputRef.setCustomValidity("Number account not found")
             
         },
         loadDataClientThird(){
-            axios.get('http://localhost:8080/api/accounts/clients',{
+            axios.get('http://localhost:8080/api/accounts/clients/name',{
                 params:{
                     numberAccount : "VIN-" + this.accountThirdDestiny
                 }
@@ -64,7 +70,6 @@ createApp({
         makeTransferOwn(){
             Swal.fire({
                 title: 'Are you sure you want to confirm the transfer?',
-                background : "url(../img/bg-alert.jpg)",
                 color: "white",
                 showCancelButton: true,
                 confirmButtonText: 'Sure',
@@ -106,7 +111,6 @@ createApp({
         makeTransferThird(){
             Swal.fire({
                 title: 'Are you sure you want to confirm the transfer?',
-                background : "url(../img/bg-alert.jpg)",
                 color: "white",
                 showCancelButton: true,
                 confirmButtonText: 'Sure',
@@ -148,7 +152,6 @@ createApp({
         logout(){
             Swal.fire({
                 title: 'Are you sure that you want to log out?',
-                background : "url(../img/bg-alert.jpg)",
                 color: "white",
                 showCancelButton: true,
                 confirmButtonText: 'Sure',
@@ -171,3 +174,8 @@ createApp({
     }
 })
 .mount("#app")
+
+window.onload = function () {
+    $('#onload').fadeOut();
+    $('body').removeClass('hidden');
+};

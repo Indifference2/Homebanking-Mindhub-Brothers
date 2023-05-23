@@ -8,15 +8,17 @@ createApp({
             accountId: "",
             data: [],
             transactionsOrder: [],
-            startDate: "",
-            endDate: "",
+            startDate: "0000-00-00",
+            endDate: "0000-00-00",
             transactionsDateBetween: [],
+            roleUser : "",
         }
     },
     created() {
         const params = new URLSearchParams(location.search)
         this.accountId = params.get('id')
         this.loadData()
+        this.getRole()
     },
     mounted() {
 
@@ -46,10 +48,15 @@ createApp({
                     this.transactionsOrder = this.transactions.sort((a, b) => new Date(b.date) - new Date(a.date))
                     this.endDate = this.transactionsOrder[0].date.split('T')[0]
                     this.startDate = this.transactionsOrder[this.transactionsOrder.length - 1].date.split('T')[0]
-                    this.filterDateBetween()
                     this.debitBalance()
                 })
                 .catch(error => console.log(error))
+        },
+        getRole(){
+            axios.get("/api/clients/current/rol")
+            .then(response =>{
+                this.roleUser = response.data
+            })
         },
         logout() {
             Swal.fire({
@@ -60,6 +67,7 @@ createApp({
                 showCancelButton: true,
                 confirmButtonText: 'Sure',
                 showLoaderOnConfirm: true,
+                color: "white",
                 confirmButtonColor: "#009269",
                 preConfirm: (login) => {
                     return axios.post('/api/logout')
@@ -93,6 +101,7 @@ createApp({
                     autocapitalize: 'off'
                 },
                 showCancelButton: true,
+                color: "white",
                 confirmButtonText: 'Sure',
                 showLoaderOnConfirm: true,
                 confirmButtonColor: "#009269",
@@ -121,3 +130,8 @@ createApp({
         },
     }
 }).mount("#app")
+
+window.onload = function () {
+    $('#onload').fadeOut();
+    $('body').removeClass('hidden');
+};

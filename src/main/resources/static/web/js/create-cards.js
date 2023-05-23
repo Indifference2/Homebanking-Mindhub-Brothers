@@ -6,16 +6,24 @@ createApp({
             valueType : "",
             valueColor : "",
             dataClient : [],
+            roleUser: "",
         }
     },
     created(){
         this.loadData();
+        this.getRole();
     },
     methods:{
         loadData(){
             axios.get("http://localhost:8080/api/clients/current")
             .then(response =>{
                 this.dataClient = response.data
+            })
+        },
+        getRole(){
+            axios.get("/api/clients/current/rol")
+            .then(response =>{
+                this.roleUser = response.data
             })
         },
         logout(){
@@ -68,3 +76,8 @@ createApp({
         },
     })
 .mount("#app")
+
+window.onload = function () {
+    $('#onload').fadeOut();
+    $('body').removeClass('hidden');
+};

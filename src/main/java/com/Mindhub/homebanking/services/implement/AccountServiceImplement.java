@@ -50,6 +50,7 @@ public class AccountServiceImplement implements AccountService {
                         authentication.getName())
                 .getAccounts()
                 .stream()
+                .filter(account -> account.isActive())
                 .map(account -> new AccountDTO(account))
                 .collect(toList());
     }
@@ -61,6 +62,11 @@ public class AccountServiceImplement implements AccountService {
             randomNumberAccount = String.valueOf(Utils.randomNumber(899999, 100000));
         }while(accountRepository.findByNumber(randomNumberAccount)!= null);
         return randomNumberAccount;
+    }
+
+    @Override
+    public Boolean accountBelongToClient(Authentication authentication, Account account) {
+        return getAccountsAuthenticated(authentication).stream().noneMatch(accountDTO -> accountDTO.getNumber().equals(account.getNumber()));
     }
 
 }

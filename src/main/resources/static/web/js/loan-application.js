@@ -11,11 +11,14 @@ createApp({
             payment : "",
             amount : "",
             accountNumber : "",
+            loanInterest : "",
+            roleUser: "",
         }
     },
     created(){
         this.getData()
         this.getAccounts()
+        this.getRole()
     },
     mounted(){
     },
@@ -28,8 +31,13 @@ createApp({
             .catch(error =>{
                 console.log(error)
             })
-        }
-        ,
+        },
+        getRole(){
+            axios.get("/api/clients/current/rol")
+            .then(response =>{
+                this.roleUser = response.data
+            })
+        },
         getData(){
             axios.get("http://localhost:8080/api/loans")
             .then(response =>{
@@ -44,6 +52,7 @@ createApp({
         },
         filterByLoanId(idLoan){
             this.filterLoan = this.dataLoans.filter(loan => loan.id == idLoan)[0]
+            this.loanInterest = this.filterLoan.interest
         },
         loanPayments(loan){
             this.loanSelectPayments = loan.payments.map(payment => payment)
@@ -52,6 +61,7 @@ createApp({
             Swal.fire({
                 title: 'Are you sure you want confirm?',
                 showCancelButton: true,
+                color: "white",
                 confirmButtonText: 'Yes',
                 confirmButtonColor: "#009269",
                 preConfirm: () =>{
@@ -120,3 +130,8 @@ createApp({
         },
     }
 }).mount("#App")
+
+window.onload = function () {
+    $('#onload').fadeOut();
+    $('body').removeClass('hidden');
+};

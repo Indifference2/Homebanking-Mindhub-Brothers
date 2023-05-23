@@ -13,4 +13,5 @@ public interface AccountService {
     List<AccountDTO> getAccounts();
     List<AccountDTO> getAccountsAuthenticated(Authentication authentication);
     String randomNumberAccount();
+    Boolean accountBelongToClient(Authentication authentication, Account account);
 }
