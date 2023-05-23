@@ -29,7 +29,6 @@ createApp({
         logout(){
             Swal.fire({
                 title: 'Are you sure that you want to log out?',
-                background : "url(../img/bg-alert.jpg)",
                 color: "white",
                 showCancelButton: true,
                 confirmButtonText: 'Sure',
@@ -68,6 +67,7 @@ createApp({
                     Swal.fire({
                         title: 'Error',
                         text : error.response.data,
+                        color: "black",
                         icon: 'error',
                         showConfirmButton: true,
                     })
