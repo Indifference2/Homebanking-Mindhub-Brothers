@@ -38,7 +38,7 @@ public class ClientController {
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
 
-        if (firstName.isBlank()) {
+        if (firstName.isBlank()){
             return new ResponseEntity<>("First Name can't be on blank", HttpStatus.FORBIDDEN);
         }
         if(lastName.isBlank()){

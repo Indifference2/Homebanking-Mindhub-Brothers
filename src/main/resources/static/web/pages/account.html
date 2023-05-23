@@ -101,7 +101,7 @@
                         Download Transactions
                     </button>
                 </div>
-                <table class="table table-responsive table-bordered mt-4">
+                <table class="table table-responsive table-bordered table-sm mt-4">
                     <thead>
                         <tr>
                             <th>Amount</th>
@@ -122,7 +122,7 @@
                                 <td>{{transaction.description}}</td>
                                 <td>{{transaction.type}}</td>
                                 <td>{{transaction.date.split('T')[1].split('.')[0]}}</td>
-                                <td>${{transaction.balanceAccount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}
+                                <td>US${{transaction.balanceAccount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}
                                 </td>
                             </tr>
                         </template>

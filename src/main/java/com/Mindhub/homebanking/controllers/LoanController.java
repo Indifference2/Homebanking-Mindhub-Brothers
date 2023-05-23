@@ -105,7 +105,7 @@ public class LoanController {
             return new ResponseEntity<>("You already have this loan", HttpStatus.FORBIDDEN);
         }
 
-        ClientLoan clientLoan = new ClientLoan(UtilsLoan.calculateInterest(loanApplicationDTO.getAmount(), loanRequested.getInterest())+ loanApplicationDTO.getAmount(), loanApplicationDTO.getPayments());
+        ClientLoan clientLoan = new ClientLoan(UtilsLoan.totalInterest(loanApplicationDTO.getAmount(), loanRequested.getInterest(), loanApplicationDTO.getPayments()), loanApplicationDTO.getPayments());
         clientLoanService.saveClientLoan(clientLoan);
 
         Transaction transaction = new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loanRequested.getName() + " loan approved", LocalDateTime.now(), accountReceiver.getBalance() + loanApplicationDTO.getAmount(), true);
