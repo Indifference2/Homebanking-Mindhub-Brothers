@@ -31,7 +31,7 @@ createApp({
                     endDate: this.endDate,
                 }
             }).then(response => {
-                this.transactionsDateBetween = response.data.sort((a, b) => new Date(a.date) - new Date(b.date))
+                this.transactionsDateBetween = response.data.sort((a, b) => new Date(b.date) - new Date(a.date))
             })
                 .catch(error => {
                     console.log(error)

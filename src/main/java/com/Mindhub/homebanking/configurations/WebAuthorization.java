@@ -21,7 +21,7 @@ public class WebAuthorization{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/web/style/**", "/web/js/**","/web/img/**","/web/index.html","/h2-console/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/web/style/**", "/web/js/**","/web/img/**","/web/index.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login","/api/clients").permitAll()
                 /* Controllers request*/
                 .antMatchers(HttpMethod.GET, "/api/accounts/{id}","/api/clients/current/accounts","/api/clients/current",
@@ -32,7 +32,7 @@ public class WebAuthorization{
                 .antMatchers(HttpMethod.POST, "/api/manager/loans").hasAuthority("ADMIN")
                 /* Html request*/
                 .antMatchers(HttpMethod.GET,"/web/pages/accounts.html","/web/pages/account.html", "/web/pages/cards.html", "/web/pages/create-cards.html", "/web/pages/loan-application.html", "/web/pages/transfers.html").hasAnyAuthority("CLIENT", "ADMIN")
-                .antMatchers(HttpMethod.GET,"/web/pages/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/web/pages/**", "/h2-console/**").hasAuthority("ADMIN")
 
 
                 .anyRequest().denyAll();

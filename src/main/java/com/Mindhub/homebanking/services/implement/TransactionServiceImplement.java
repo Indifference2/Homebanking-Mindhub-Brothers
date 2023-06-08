@@ -57,7 +57,6 @@ public class TransactionServiceImplement implements TransactionService {
         for (Transaction transaction : transactions){
             transaction.setActive(false);
         }
-        transactionRepository.saveAll(transactions);
     }
 
     @Override
